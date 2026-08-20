@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('penduduks', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('kecamatan_id')
-                ->constrained('kecamatans')
+            $table->foreignUuid('desa_id')
+                ->constrained('desas')
                 ->cascadeOnDelete();
             $table->unsignedInteger('total_jiwa');
             $table->year('tahun');
             $table->timestamps();
 
-            $table->unique(['kecamatan_id', 'tahun']);
+            $table->unique(['desa_id', 'tahun']);
         });
     }
 
