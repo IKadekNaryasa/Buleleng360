@@ -2,35 +2,65 @@
 
 namespace Database\Seeders;
 
+use App\Models\Agama;
+use App\Models\Desa;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class SebaranAgamaSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * PERBAIKAN: sebelumnya file ini hardcode UUID manual (50000000-...,
+     * 80000000-...) yang TIDAK PERNAH cocok dengan UUID asli, karena
+     * DesaSeeder & AgamaSeeder pakai Model::create() biasa -- ID-nya
+     * di-generate ACAK oleh trait HasUuids, bukan nilai tetap yang bisa
+     * ditebak.
+     *
+     * Solusinya: query balik ID asli lewat nama/agama, sama seperti pola
+     * yang dipakai DesaSeeder untuk mencari kecamatan_id via keyBy('nama').
      */
     public function run(): void
     {
-        $now = now();
         $jumlahPemeluk = [
-            '80000000-0000-0000-0000-000000000001' => 120,
-            '80000000-0000-0000-0000-000000000002' => 20,
-            '80000000-0000-0000-0000-000000000003' => 15,
-            '80000000-0000-0000-0000-000000000004' => 250,
-            '80000000-0000-0000-0000-000000000005' => 8,
-            '80000000-0000-0000-0000-000000000006' => 2,
-            '80000000-0000-0000-0000-000000000007' => 5,
+            'islam' => 120,
+            'kristen_protestan' => 20,
+            'kristen_katolik' => 15,
+            'hindu' => 250,
+            'buddha' => 8,
+            'khonghucu' => 2,
+            'lainnya' => 5,
         ];
 
-        foreach (['50000000-0000-0000-0000-000000000001', '50000000-0000-0000-0000-000000000002', '50000000-0000-0000-0000-000000000003', '50000000-0000-0000-0000-000000000004'] as $desaId) {
-            foreach ($jumlahPemeluk as $agamaId => $jumlah) {
-                DB::table('sebaran_agamas')->updateOrInsert(
-                    ['agama_id' => $agamaId, 'desa_id' => $desaId],
-                    ['id' => (string) Str::uuid(), 'jumlah_pemeluk' => $jumlah, 'created_at' => $now, 'updated_at' => $now],
+        $agamaMap = Agama::all()->keyBy('agama');
+
+        $desaList = Desa::all();
+
+        if ($desaList->isEmpty()) {
+            $this->command->warn('Tidak ada desa ditemukan. Pastikan DesaSeeder dijalankan lebih dulu.');
+            return;
+        }
+
+        $skippedAgama = [];
+
+        foreach ($desaList as $desa) {
+            foreach ($jumlahPemeluk as $jenisAgama => $jumlah) {
+                $agama = $agamaMap->get($jenisAgama);
+
+                if (!$agama) {
+                    $skippedAgama[$jenisAgama] = true;
+                    continue;
+                }
+
+                \App\Models\SebaranAgama::updateOrCreate(
+                    ['agama_id' => $agama->id, 'desa_id' => $desa->id],
+                    ['jumlah_pemeluk' => $jumlah],
                 );
             }
         }
+
+        if (!empty($skippedAgama)) {
+            $this->command->warn('Jenis agama tidak ditemukan di tabel agama: ' . implode(', ', array_keys($skippedAgama)));
+        }
+
+        $this->command->info('Berhasil isi sebaran_agama untuk ' . $desaList->count() . ' desa.');
     }
 }
