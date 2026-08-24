@@ -125,7 +125,7 @@ function renderPieChart(category) {
 
     if (!total) {
         chart.innerHTML =
-            '<p class="text-xs text-slate-500">Belum ada data diagram.</p>';
+            '<div class="dashboard-empty-state text-xs text-slate-500">Belum ada data diagram.</div>';
         return;
     }
 
