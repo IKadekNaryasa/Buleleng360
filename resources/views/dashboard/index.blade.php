@@ -46,7 +46,6 @@
 
             <div class="dashboard-status-bar absolute left-16 top-4 z-[1000] flex items-center gap-2">
                 <span class="dashboard-status-title">Buleleng 360</span>
-                <span class="dashboard-status-chip dashboard-status-live">● LIVE DATA</span>
                 <span class="dashboard-status-chip">MAP VIEW</span>
             </div>
 

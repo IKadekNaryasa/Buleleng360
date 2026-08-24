@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             KecamatanSeeder::class,
             DesaSeeder::class,
             // PartaiSeeder::class,
-            // OrmasSeeder::class,
+            OrmasSeeder::class,
             // AgamaSeeder::class,
             // PendudukSeeder::class,
             // SebaranAgamaSeeder::class,
