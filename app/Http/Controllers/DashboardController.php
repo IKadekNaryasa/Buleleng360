@@ -11,7 +11,11 @@ class DashboardController extends Controller
 {
     public function index(): View
     {
-        $kecamatanList = Kecamatan::orderBy('nama')->get();
+        $kecamatanList = Kecamatan::get()->sortBy(fn(Kecamatan $kecamatan): int => $this->kecamatanSortPosition($kecamatan->nama))->values()->map(function (Kecamatan $kecamatan): Kecamatan {
+            $kecamatan->kode = $this->kecamatanCode($kecamatan->nama);
+
+            return $kecamatan;
+        });
 
         return view('dashboard.index', compact('kecamatanList'));
     }
@@ -28,16 +32,17 @@ class DashboardController extends Controller
             'desa.partai',
             'desa.penduduk',
             'desa.sebaranAgama.agama',
-        ])->orderBy('nama')->get()->map(function (Kecamatan $kecamatan): array {
+        ])->get()->sortBy(fn(Kecamatan $kecamatan): int => $this->kecamatanSortPosition($kecamatan->nama))->values()->map(function (Kecamatan $kecamatan): array {
             $desa = $kecamatan->desa;
 
             return [
                 'id' => $kecamatan->id,
                 'nama' => $kecamatan->nama,
+                'kode' => $this->kecamatanCode($kecamatan->nama),
                 'lat' => (float) $kecamatan->lat,
                 'long' => (float) $kecamatan->long,
                 'total_penduduk' => $desa->flatMap->penduduk->where('tahun', 2025)->sum('total_jiwa'),
-                'ormas' => $desa->flatMap->ormas->map(fn ($item): array => [
+                'ormas' => $desa->flatMap->ormas->map(fn($item): array => [
                     'nama' => $item->nama,
                     'jumlah_anggota' => $item->jumlah_anggota,
                     'ketua' => $item->ketua,
@@ -45,7 +50,7 @@ class DashboardController extends Controller
                     'lat' => (float) $item->lat,
                     'long' => (float) $item->long,
                 ])->values(),
-                'partai' => $desa->flatMap->partai->map(fn ($item): array => [
+                'partai' => $desa->flatMap->partai->map(fn($item): array => [
                     'nama' => $item->nama,
                     'jumlah_kader' => $item->jumlah_kader,
                     'ketua' => $item->ketua,
@@ -55,10 +60,42 @@ class DashboardController extends Controller
                 ])->values(),
                 'agama' => $desa->flatMap->sebaranAgama
                     ->groupBy('agama.agama')
-                    ->map(fn ($rows): int => $rows->sum('jumlah_pemeluk'))
+                    ->map(fn($rows): int => $rows->sum('jumlah_pemeluk'))
                     ->sortKeys()
                     ->all(),
             ];
         })->values();
+    }
+
+    private function kecamatanCode(string $nama): string
+    {
+        return [
+            'Tejakula' => 'TJK',
+            'Kubutambahan' => 'KBT',
+            'Sawan' => 'SWN',
+            'Buleleng' => 'BLL',
+            'Sukasada' => 'SSD',
+            'Banjar' => 'BJR',
+            'Seririt' => 'SRT',
+            'Busungbiu' => 'BSB',
+            'Gerokgak' => 'GRK',
+        ][$nama] ?? strtoupper(substr($nama, 0, 3));
+    }
+
+    private function kecamatanSortPosition(string $nama): int
+    {
+        $position = array_search($nama, [
+            'Tejakula',
+            'Kubutambahan',
+            'Sawan',
+            'Buleleng',
+            'Sukasada',
+            'Banjar',
+            'Seririt',
+            'Busungbiu',
+            'Gerokgak',
+        ], true);
+
+        return $position === false ? PHP_INT_MAX : $position;
     }
 }

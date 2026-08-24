@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Desa;
+use App\Models\Penduduk;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class PendudukSeeder extends Seeder
 {
@@ -22,11 +22,13 @@ class PendudukSeeder extends Seeder
             return;
         }
 
-        DB::table('penduduks')->insertOrIgnore([
-            ['id' => '90000000-0000-0000-0000-000000000001', 'desa_id' => $desa[0]->id, 'total_jiwa' => 21000, 'tahun' => 2025, 'created_at' => $now, 'updated_at' => $now],
-            ['id' => '90000000-0000-0000-0000-000000000002', 'desa_id' => $desa[1]->id, 'total_jiwa' => 18500, 'tahun' => 2025, 'created_at' => $now, 'updated_at' => $now],
-            ['id' => '90000000-0000-0000-0000-000000000003', 'desa_id' => $desa[2]->id, 'total_jiwa' => 24000, 'tahun' => 2025, 'created_at' => $now, 'updated_at' => $now],
-            ['id' => '90000000-0000-0000-0000-000000000004', 'desa_id' => $desa[3]->id, 'total_jiwa' => 22000, 'tahun' => 2025, 'created_at' => $now, 'updated_at' => $now],
-        ]);
+        $jumlahPenduduk = [21000, 18500, 24000, 22000];
+
+        foreach (Desa::orderBy('nama')->get() as $index => $desaItem) {
+            Penduduk::updateOrCreate(
+                ['desa_id' => $desaItem->id, 'tahun' => 2025],
+                ['total_jiwa' => $jumlahPenduduk[$index] ?? 420],
+            );
+        }
     }
 }
