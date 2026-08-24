@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
-
 #[Fillable([
-    'nama_partai',
+    'nama',
     'jumlah_kader',
     'ketua',
     'sekretaris',
@@ -21,7 +20,9 @@ use Illuminate\Database\Eloquent\Model;
 class Partai extends Model
 {
     use HasUuids;
+
     protected $keyType = 'string';
+
     public $incrementing = false;
 
     protected $casts = [

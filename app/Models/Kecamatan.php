@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['nama_kecamatan', 'lat', 'long', 'geojson_boundary'])]
+#[Fillable(['nama', 'lat', 'long', 'geojson_boundary'])]
 class Kecamatan extends Model
 {
     use HasUuids;
 
     protected $keyType = 'string';
+
     public $incrementing = false;
 
     protected $casts = [
@@ -36,7 +37,7 @@ class Kecamatan extends Model
     {
         $totalJiwa = $this->totalPenduduk($tahun);
 
-        if (!$totalJiwa) {
+        if (! $totalJiwa) {
             return [];
         }
 
@@ -46,7 +47,7 @@ class Kecamatan extends Model
             ->with('agama')
             ->get()
             ->groupBy('agama.agama')
-            ->map(fn($rows) => round(($rows->sum('jumlah_pemeluk') / $totalJiwa) * 100, 2))
+            ->map(fn ($rows) => round(($rows->sum('jumlah_pemeluk') / $totalJiwa) * 100, 2))
             ->toArray();
     }
 }

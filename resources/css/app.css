@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-neon-marker {
+    background: transparent;
+    border: 0;
+}
+
+.custom-neon-marker span {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #07111f;
+    border-radius: 9999px;
+    background: var(--marker-color);
+    box-shadow:
+        0 0 0 3px color-mix(in srgb, var(--marker-color) 30%, transparent),
+        0 0 14px var(--marker-color);
+}
