@@ -83,6 +83,14 @@
                         <input type="checkbox" data-clear-map class="h-2.5 w-2.5 rounded border-slate-500 bg-slate-800 text-slate-300 focus:ring-1 focus:ring-slate-400">
                         <span>Clear</span>
                     </label>
+                    <label class="flex cursor-pointer items-center gap-1 text-[0.6rem] text-sky-200">
+                        <input type="checkbox" data-boundary-toggle="desa" checked class="h-2.5 w-2.5 rounded border-slate-500 bg-slate-800 text-sky-400 focus:ring-1 focus:ring-sky-400">
+                        <span>Desa</span>
+                    </label>
+                    <label class="flex cursor-pointer items-center gap-1 text-[0.6rem] text-emerald-200">
+                        <input type="checkbox" data-boundary-toggle="kecamatan" checked class="h-2.5 w-2.5 rounded border-slate-500 bg-slate-800 text-emerald-400 focus:ring-1 focus:ring-emerald-400">
+                        <span>Kecamatan</span>
+                    </label>
                 </div>
             </div>
 

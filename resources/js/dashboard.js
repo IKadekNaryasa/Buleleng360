@@ -19,6 +19,8 @@ L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
 }).addTo(map);
 
 const activeLayer = L.layerGroup().addTo(map);
+const desaBoundaryLayer = L.layerGroup().addTo(map);
+const kecamatanBoundaryLayer = L.layerGroup().addTo(map);
 const colors = {
     ormas: "#2563eb",
     partai: "#dc2626",
@@ -176,6 +178,85 @@ function clearMapLayer() {
     activeLayer.clearLayers();
 }
 
+function renderDesaBoundaries() {
+    desaBoundaryLayer.clearLayers();
+
+    dashboardData.forEach((kecamatan) => {
+        kecamatan.desa.forEach((desa) => {
+            if (!desa.geojson_boundary) {
+                return;
+            }
+
+            L.geoJSON(
+                {
+                    type: "Feature",
+                    properties: { nama: desa.nama },
+                    geometry: desa.geojson_boundary,
+                },
+                {
+                    style: {
+                        color: "#38bdf8",
+                        fillColor: "#0e7490",
+                        fillOpacity: 0.08,
+                        opacity: 0.55,
+                        weight: 1,
+                    },
+                    onEachFeature: (feature, layer) => {
+                        layer.bindTooltip(escapeHtml(feature.properties.nama), {
+                            direction: "center",
+                            className: "desa-boundary-tooltip",
+                        });
+                    },
+                },
+            ).addTo(desaBoundaryLayer);
+        });
+    });
+}
+
+function renderKecamatanBoundaries() {
+    kecamatanBoundaryLayer.clearLayers();
+
+    dashboardData.forEach((kecamatan, index) => {
+        if (!kecamatan.geojson_boundary) {
+            return;
+        }
+
+        L.geoJSON(
+            {
+                type: "Feature",
+                properties: { nama: kecamatan.nama },
+                geometry: kecamatan.geojson_boundary,
+            },
+            {
+                style: {
+                    color: chartColors[index % chartColors.length],
+                    fillColor: chartColors[index % chartColors.length],
+                    fillOpacity: 0.03,
+                    opacity: 0.9,
+                    weight: 3,
+                },
+                onEachFeature: (feature, layer) => {
+                    layer.bindTooltip(escapeHtml(feature.properties.nama), {
+                        direction: "center",
+                        className: "kecamatan-boundary-tooltip",
+                    });
+                },
+            },
+        ).addTo(kecamatanBoundaryLayer);
+    });
+}
+
+function toggleBoundaryLayer(category, isVisible) {
+    const layer =
+        category === "desa" ? desaBoundaryLayer : kecamatanBoundaryLayer;
+
+    if (isVisible) {
+        layer.addTo(map);
+    } else {
+        map.removeLayer(layer);
+    }
+}
+
 function focusKecamatan(kecamatanId) {
     const kecamatan = kecamatanById.get(kecamatanId);
 
@@ -260,6 +341,7 @@ function renderOrganization(category, kecamatanId) {
                     </div>
                 </div>
             `,
+                { className: "dashboard-dark-popup" },
             )
             .addTo(activeLayer);
     });
@@ -290,6 +372,7 @@ function renderReligion(selectedKecamatanId = null) {
                     <div class="mt-2 space-y-1 text-sm">${agamaRows || "Belum ada data agama."}</div>
                 </div>
             `,
+                { className: "dashboard-dark-popup" },
             )
             .addTo(activeLayer);
     });
@@ -313,6 +396,15 @@ function activate(category, kecamatanId = null) {
 }
 
 function bindControls() {
+    document.querySelectorAll("[data-boundary-toggle]").forEach((checkbox) => {
+        checkbox.addEventListener("change", (event) => {
+            toggleBoundaryLayer(
+                event.target.dataset.boundaryToggle,
+                event.target.checked,
+            );
+        });
+    });
+
     document
         .querySelector("[data-clear-map]")
         ?.addEventListener("change", (event) => {
@@ -360,6 +452,16 @@ fetch("/dashboard/data")
     .then((data) => {
         dashboardData = data;
         kecamatanById = new Map(data.map((item) => [item.id, item]));
+        renderDesaBoundaries();
+        renderKecamatanBoundaries();
+        document
+            .querySelectorAll("[data-boundary-toggle]")
+            .forEach((checkbox) => {
+                toggleBoundaryLayer(
+                    checkbox.dataset.boundaryToggle,
+                    checkbox.checked,
+                );
+            });
         renderAllCharts();
         bindControls();
     })

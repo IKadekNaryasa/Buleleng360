@@ -21,6 +21,7 @@ class KecamatanSeeder extends Seeder
                 'nama' => $item['nama_kecamatan'],
                 'lat' => $item['lat'],
                 'long' => $item['long'],
+                'geojson_boundary' => $item['geojson_boundary'],
             ]);
         }
     }
