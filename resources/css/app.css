@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --font-display: "Space Grotesk", sans-serif;
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea {
+    font-family: var(--font-display);
+}
+
+.tech-shell h1,
+.tech-shell h2,
+.tech-shell h3,
+.tech-shell strong,
+.dashboard-shell h1,
+.dashboard-shell h2,
+.dashboard-shell h3,
+.dashboard-shell strong {
+    font-family: var(--font-display);
+}
+
 .tech-shell {
     background-color: #07111f;
     background-image:
@@ -22,6 +46,77 @@
         32px 32px,
         auto,
         auto;
+}
+
+.tech-shell .text-gray-900,
+.tech-shell .text-gray-800,
+.tech-shell .text-gray-700,
+.tech-shell .text-gray-600 {
+    color: #cbd5e1;
+}
+
+.tech-shell .border-gray-300,
+.tech-shell .border-gray-200,
+.tech-shell .border-gray-100 {
+    border-color: rgba(103, 232, 249, 0.18);
+}
+
+.auth-neon-label {
+    color: #bae6fd !important;
+}
+
+.auth-neon-input,
+.profile-card input,
+.profile-card textarea {
+    background: rgba(8, 24, 41, 0.88) !important;
+    border-color: rgba(56, 189, 248, 0.42) !important;
+    border-radius: 0.65rem !important;
+    color: #e0f2fe !important;
+}
+
+.auth-neon-input:focus,
+.profile-card input:focus,
+.profile-card textarea:focus {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.14) !important;
+    outline: none !important;
+}
+
+.dashboard-home {
+    background: radial-gradient(
+        circle at center,
+        rgba(14, 116, 144, 0.13),
+        transparent 34rem
+    );
+}
+
+.dashboard-access-panel,
+.profile-card {
+    background: rgba(8, 24, 41, 0.78);
+    border: 1px solid rgba(103, 232, 249, 0.18);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+.dashboard-eyebrow {
+    color: #67e8f9;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+.dashboard-console-button {
+    background: #0891b2;
+    border: 1px solid rgba(165, 243, 252, 0.35);
+    box-shadow: 0 10px 25px rgba(8, 145, 178, 0.2);
+    transition:
+        background-color 150ms,
+        transform 150ms;
+}
+
+.dashboard-console-button:hover {
+    background: #0e7490;
+    transform: translateY(-2px);
 }
 
 .tech-auth-panel,

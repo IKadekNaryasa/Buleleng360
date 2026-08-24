@@ -7,16 +7,16 @@
 
         <!-- NIP -->
         <div>
-            <x-input-label for="nip" :value="__('NIP')" />
-            <x-text-input id="nip" class="block mt-1 w-full" type="text" name="nip" :value="old('nip')" required autofocus autocomplete="username" />
+            <x-input-label for="nip" class="auth-neon-label" :value="__('NIP')" />
+            <x-text-input id="nip" class="auth-neon-input block mt-1 w-full" type="text" name="nip" :value="old('nip')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('nip')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" class="auth-neon-label" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
+            <x-text-input id="password" class="auth-neon-input block mt-1 w-full"
                 type="password"
                 name="password"
                 required autocomplete="current-password" />
