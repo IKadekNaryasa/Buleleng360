@@ -8,40 +8,46 @@
     @vite(['resources/css/app.css', 'resources/js/dashboard.js'])
 </head>
 
-<body class="h-screen w-screen overflow-hidden bg-[#07111f] text-slate-100 antialiased">
+<body class="dashboard-shell h-screen w-screen overflow-hidden bg-[#07111f] text-slate-100 antialiased">
 
-    <div class="grid h-screen grid-cols-[minmax(290px,340px)_1fr_minmax(290px,340px)]">
+    <div class="dashboard-layout grid grid-cols-[minmax(330px,380px)_1fr_minmax(330px,380px)] gap-3 p-3">
 
         {{-- ==================== KIRI: ORMAS & PARTAI ==================== --}}
-        <aside class="flex flex-col overflow-hidden border-r border-cyan-400/20 bg-[#0b1829]">
+        <aside class="dashboard-sidebar flex flex-col gap-3 overflow-hidden bg-transparent">
 
             {{-- Ormas --}}
-            <section class="flex flex-1 flex-col overflow-hidden border-b border-cyan-400/20">
-                <div class="border-b border-white/10 px-4 py-3">
+            <section class="dashboard-section dashboard-card-emerald flex flex-1 flex-col overflow-hidden">
+                <div class="dashboard-section-header border-b border-white/10 px-4 py-3">
                     <div class="flex items-center justify-between gap-3">
                         <h2 class="text-xs font-semibold uppercase tracking-wider text-cyan-300">Organisasi Masyarakat</h2>
                     </div>
                 </div>
-                <div class="dashboard-chart" data-chart="ormas"></div>
+                <div class="dashboard-chart dashboard-chart-panel" data-chart="ormas"></div>
             </section>
 
             {{-- Partai --}}
-            <section class="flex flex-1 flex-col overflow-hidden">
-                <div class="border-b border-white/10 px-4 py-3">
+            <section class="dashboard-section dashboard-card-red flex flex-1 flex-col overflow-hidden">
+                <div class="dashboard-section-header border-b border-white/10 px-4 py-3">
                     <div class="flex items-center justify-between gap-3">
                         <h2 class="text-xs font-semibold uppercase tracking-wider text-lime-300">Partai Politik</h2>
                     </div>
                 </div>
-                <div class="dashboard-chart " data-chart="partai"></div>
+                <div class="dashboard-chart dashboard-chart-panel" data-chart="partai"></div>
             </section>
 
         </aside>
 
         {{-- ==================== TENGAH: PETA ==================== --}}
-        <main class="relative">
+        <main class="dashboard-map-stage relative overflow-hidden rounded-xl border border-cyan-300/25">
             <div id="map" class="h-full w-full"></div>
 
-            <div class="absolute right-4 top-4 z-[1000] w-44 rounded-md border border-cyan-300/30 bg-[#0b1829]/95 p-2 shadow-lg shadow-cyan-950/30 backdrop-blur sm:w-52">
+            <div class="dashboard-status-bar absolute left-16 top-4 z-[1000] flex items-center gap-2">
+                <span class="dashboard-status-title">Buleleng 360</span>
+                <span class="dashboard-status-chip dashboard-status-live">● LIVE DATA</span>
+                <span class="dashboard-status-chip">MAP VIEW</span>
+            </div>
+
+            <div class="dashboard-map-controls absolute right-4 top-4 z-[1000] w-44 rounded-md border border-cyan-300/30 bg-[#0b1829]/95 p-2 shadow-lg shadow-cyan-950/30 backdrop-blur sm:w-52">
                 <p class="mb-1.5 text-[0.65rem] font-semibold uppercase tracking-wider text-slate-300">Pilih Kecamatan</p>
                 <div class="grid grid-cols-3 gap-1" data-kecamatan-list>
                     @forelse ($kecamatanList as $kec)
@@ -77,28 +83,24 @@
                 </div>
             </div>
 
-            {{-- Judul kecil mengambang di tengah-atas peta, identitas dashboard --}}
-            <div class="pointer-events-none absolute left-1/2 top-4 z-[1000] -translate-x-1/2 rounded-md border border-cyan-300/30 bg-[#0b1829]/90 px-3 py-1.5 shadow-lg shadow-cyan-950/30 backdrop-blur">
-                <p class="text-sm font-semibold text-cyan-200">Buleleng 360 <span class="text-lime-300">/ LIVE MAP</span></p>
-            </div>
         </main>
 
         {{-- ==================== KANAN: AGAMA & KONFLIK ==================== --}}
-        <aside class="flex flex-col overflow-hidden border-l border-cyan-400/20 bg-[#0b1829]">
+        <aside class="dashboard-sidebar flex flex-col gap-3 overflow-hidden bg-transparent">
 
             {{-- Agama --}}
-            <section class="flex flex-1 flex-col overflow-hidden border-b border-cyan-400/20">
-                <div class="border-b border-white/10 px-4 py-3">
+            <section class="dashboard-section dashboard-card-amber flex flex-1 flex-col overflow-hidden">
+                <div class="dashboard-section-header border-b border-white/10 px-4 py-3">
                     <div class="flex items-center justify-between gap-3">
                         <h2 class="text-xs font-semibold uppercase tracking-wider text-amber-300">Sebaran Agama</h2>
                     </div>
                 </div>
-                <div class="dashboard-chart " data-chart="agama"></div>
+                <div class="dashboard-chart dashboard-chart-panel" data-chart="agama"></div>
             </section>
 
             {{-- Konflik: sengaja dikosongkan dulu --}}
-            <section class="flex flex-1 flex-col overflow-hidden">
-                <div class="border-b border-slate-100 px-4 py-3">
+            <section class="dashboard-section dashboard-card-slate flex flex-1 flex-col overflow-hidden">
+                <div class="dashboard-section-header border-b border-slate-100 px-4 py-3">
                     <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500">Data Konflik</h2>
                 </div>
                 <div class="flex flex-1 items-center justify-center px-4">

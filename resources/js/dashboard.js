@@ -12,9 +12,9 @@ const map = L.map("map", { zoomControl: true }).setView(
     DEFAULT_ZOOM,
 );
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
     attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        '&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     maxZoom: 19,
 }).addTo(map);
 
@@ -153,7 +153,7 @@ function renderPieChart(category) {
         .map((entry) => {
             const detail =
                 category === "agama"
-                    ? `${formatNumber(entry.value)} pemeluk (${formatPercentage(totalPopulation ? (entry.value / totalPopulation) * 100 : 0)})`
+                    ? `${formatNumber(entry.value)} (${formatPercentage(totalPopulation ? (entry.value / totalPopulation) * 100 : 0)})`
                     : `${formatNumber(entry.value)} ${category} (${formatPercentage(entry.percentage)})`;
             const label = entry.label ?? entry.kode;
 
