@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function index(): View
     {
-        $kecamatanList = Kecamatan::get()->sortBy(fn(Kecamatan $kecamatan): int => $this->kecamatanSortPosition($kecamatan->nama))->values()->map(function (Kecamatan $kecamatan): Kecamatan {
+        $kecamatanList = Kecamatan::get()->sortBy(fn (Kecamatan $kecamatan): int => $this->kecamatanSortPosition($kecamatan->nama))->values()->map(function (Kecamatan $kecamatan): Kecamatan {
             $kecamatan->kode = $this->kecamatanCode($kecamatan->nama);
 
             return $kecamatan;
@@ -32,7 +32,7 @@ class DashboardController extends Controller
             'desa.partai',
             'desa.penduduk',
             'desa.sebaranAgama.agama',
-        ])->get()->sortBy(fn(Kecamatan $kecamatan): int => $this->kecamatanSortPosition($kecamatan->nama))->values()->map(function (Kecamatan $kecamatan): array {
+        ])->get()->sortBy(fn (Kecamatan $kecamatan): int => $this->kecamatanSortPosition($kecamatan->nama))->values()->map(function (Kecamatan $kecamatan): array {
             $desa = $kecamatan->desa;
 
             return [
@@ -42,25 +42,31 @@ class DashboardController extends Controller
                 'lat' => (float) $kecamatan->lat,
                 'long' => (float) $kecamatan->long,
                 'total_penduduk' => $desa->flatMap->penduduk->where('tahun', 2025)->sum('total_jiwa'),
-                'ormas' => $desa->flatMap->ormas->map(fn($item): array => [
+                'ormas' => $desa->flatMap(fn ($desaItem) => $desaItem->ormas->map(fn ($item): array => [
+                    'nama_desa' => $desaItem->nama,
                     'nama' => $item->nama,
                     'jumlah_anggota' => $item->jumlah_anggota,
                     'ketua' => $item->ketua,
+                    'sekretaris' => $item->sekretaris,
+                    'bendahara' => $item->bendahara,
                     'alamat' => $item->alamat,
                     'lat' => (float) $item->lat,
                     'long' => (float) $item->long,
-                ])->values(),
-                'partai' => $desa->flatMap->partai->map(fn($item): array => [
+                ]))->values(),
+                'partai' => $desa->flatMap(fn ($desaItem) => $desaItem->partai->map(fn ($item): array => [
+                    'nama_desa' => $desaItem->nama,
                     'nama' => $item->nama,
                     'jumlah_kader' => $item->jumlah_kader,
                     'ketua' => $item->ketua,
+                    'sekretaris' => $item->sekretaris,
+                    'bendahara' => $item->bendahara,
                     'alamat' => $item->alamat,
                     'lat' => (float) $item->lat,
                     'long' => (float) $item->long,
-                ])->values(),
+                ]))->values(),
                 'agama' => $desa->flatMap->sebaranAgama
                     ->groupBy('agama.agama')
-                    ->map(fn($rows): int => $rows->sum('jumlah_pemeluk'))
+                    ->map(fn ($rows): int => $rows->sum('jumlah_pemeluk'))
                     ->sortKeys()
                     ->all(),
             ];

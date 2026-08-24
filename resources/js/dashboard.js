@@ -249,10 +249,13 @@ function renderOrganization(category, kecamatanId) {
             .bindPopup(
                 `
                 <div class="min-w-[190px] text-slate-900">
+                    <div class="text-sm">Desa: <b>${escapeHtml(item.nama_desa)}</b></div>
                     <strong class="text-base">${escapeHtml(item.nama)}</strong>
                     <div class="mt-2 space-y-1 text-sm">
                         <div>${category === "ormas" ? "Anggota" : "Kader"}: <b>${formatNumber(category === "ormas" ? item.jumlah_anggota : item.jumlah_kader)}</b></div>
                         <div>Ketua: ${escapeHtml(item.ketua)}</div>
+                        <div>Sekretaris: ${escapeHtml(item.sekretaris)}</div>
+                        <div>Bendahara: ${escapeHtml(item.bendahara)}</div>
                         <div>Alamat: ${escapeHtml(item.alamat)}</div>
                     </div>
                 </div>
