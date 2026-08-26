@@ -1,0 +1,110 @@
+[
+    {
+        "nama_partai": "Partai Keadilan Sejahtera",
+        "nama_desa": "Penarukan",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_kader": 0,
+        "ketua": "kkkM. Huzri",
+        "sekretaris": "Muhammad Syahruddin",
+        "bendahara": "Afriani",
+        "lat": -8.072343,
+        "long": 115.233574,
+        "alamat": "Jl. Pulau Samosir II No.04 Penarukan, Singaraja Bali"
+    },
+    {
+        "nama_partai": "PARTAI BURUH",
+        "nama_desa": "Penarukan",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_kader": 0,
+        "ketua": "I Gusti Ngurah Made Rediasa",
+        "sekretaris": "I Gede Sukajiwa",
+        "bendahara": "Ni Wayan Sarianyar",
+        "lat": -8.107957,
+        "long": 115.110035,
+        "alamat": "Jalan Pulau Seribu, Lingkungan Penarungan, Kelurahan Penarukan, Kecamatan Buleleng, Kabupaten Buleleng"
+    },
+    {
+        "nama_partai": "Partai Gerakan Rakyat",
+        "nama_desa": "Kampungbaru",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_kader": 0,
+        "ketua": "Abdul Khaliq",
+        "sekretaris": "A.A.Monny Aryadi D, S.IP.,S H.,M.Si.,M.H",
+        "bendahara": "Rahimah",
+        "lat": -8.11718,
+        "long": 115.10185,
+        "alamat": "Jl.P.Sulawesi IV no 48, Singaraja, RT 004 RW 008, Kampung Baru, Buleleng, Bali."
+    },
+    {
+        "nama_partai": "PARTAI HATI NURANI RAKYAT",
+        "nama_desa": "Kampung Anyar",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_kader": 0,
+        "ketua": "Wayan Teren, SH",
+        "sekretaris": "I Gede Arta Wijaya",
+        "bendahara": "Ni Putu Eka Yudyantini",
+        "lat": -8.109528,
+        "long": 115.08875,
+        "alamat": "Jalan Patimura No 7 Singaraja"
+    },
+    {
+        "nama_partai": "DEWAN PIMPINAN CABANG PARTAI DEMOKRASI INDONESIA PERJUANGAN KABUPATEN BULELENG",
+        "nama_desa": "Pemaron",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_kader": 0,
+        "ketua": "GEDE SUPRIATNA, S.H.",
+        "sekretaris": "KETUT NGURAH ARYA, S.M.",
+        "bendahara": "NI KADEK TURKINI, S.H.",
+        "lat": -8.129959,
+        "long": 115.062856,
+        "alamat": "Jln. Singaraja - Seririt, Desa Pemaron, Kec. Buleleng, Kab. Buleleng"
+    },
+    {
+        "nama_partai": "DEWAN PIMPINAN DAERAH PARTAI NASDEM KABUPATEN BULELENG",
+        "nama_desa": "Banyuasri",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_kader": 0,
+        "ketua": "MADE JAYADI ASMARA, S.Sos.",
+        "sekretaris": "I NYOMAN MELIUN",
+        "bendahara": "MADE SUDIARTA,S.H.",
+        "lat": -8.115176,
+        "long": 115.082777,
+        "alamat": "Jalan Kamboja No. 2 Banyuasri, Kec. Buleleng, Kabupaten Buleleng, Bali"
+    },
+    {
+        "nama_partai": "DEWAN PIMPINAN CABANG PARTAI GERINDRA KABUPATEN BULELENG",
+        "nama_desa": "Liligundi",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_kader": 0,
+        "ketua": "GEDE HARJA ASTAWA, S.H.,M.H.",
+        "sekretaris": "KADEK WIDANA, S.H.",
+        "bendahara": "KETUT MERTIASA",
+        "lat": -8.129362,
+        "long": 115.099086,
+        "alamat": "JALAN MAYORMETRA NOMOR 63 SINGARAJA, KELURAHAN LILIGUNDI, KECAMATAN BULELENG, KABUPATEN BULELENG"
+    },
+    {
+        "nama_partai": "Dewan Pimpinan Daerah Partai Golongan Karya Kabupaten Buleleng",
+        "nama_desa": "Banjar Jawa",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_kader": 0,
+        "ketua": "IDA GEDE KOMANG KRESNA BUDI, S.AP",
+        "sekretaris": "I NYOMAN GEDE WANDIRA ADI, ST.",
+        "bendahara": "KADEK KRISNA WIKAN NANDA",
+        "lat": -8.118387,
+        "long": 115.092002,
+        "alamat": "Jalan Ngurah Rai No. 43 Singaraja"
+    },
+    {
+        "nama_partai": "Dewan Pimpinan Cabang Demokrat",
+        "nama_desa": "Baktiseraga",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_kader": 0,
+        "ketua": "Luh Gede Herryani, SH., M.Kn",
+        "sekretaris": "Luh Hesti Ranitasari, SE., MM",
+        "bendahara": "Kadek Sumardika",
+        "lat": -8.123867,
+        "long": 115.0697,
+        "alamat": "Jl. A. Yani No.171, Baktiseraga, Kec. Buleleng, Kabupaten Buleleng, Bali 81119"
+    }
+]

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Desa;
+use App\Models\Partai;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,18 +14,39 @@ class PartaiSeeder extends Seeder
      */
     public function run(): void
     {
-        $now = now();
-        $desa = Desa::orderBy('nama')->take(4)->get();
+        $path = database_path('seeders/data/partai_data.json');
+        $data = json_decode(file_get_contents($path), true);
+        $desaMap = Desa::all()->keyBy('nama');
 
-        if ($desa->count() < 4) {
-            $this->command->warn('Data partai dilewati karena minimal 4 desa diperlukan.');
+        $skipped = [];
 
-            return;
+        foreach ($data as $item) {
+            $desa = $desaMap->get($item['nama_desa']);
+
+            if (!$desa) {
+                $skipped[] = $item['nama_partai'] . ' (' . $item['nama_desa'] . ')';
+                continue;
+            }
+
+            Partai::updateOrCreate(
+                ['desa_id' => $desa->id, 'nama' => $item['nama_partai']],
+                [
+                    'jumlah_kader' => $item['jumlah_kader'],
+                    'ketua' => $item['ketua'],
+                    'sekretaris' => $item['sekretaris'],
+                    'bendahara' => $item['bendahara'],
+                    'alamat' => $item['alamat'],
+                    'lat' => $item['lat'],
+                    'long' => $item['long'],
+                ]
+            );
         }
 
-        DB::table('partais')->insertOrIgnore([
-            ['id' => '60000000-0000-0000-0000-000000000001', 'desa_id' => $desa[0]->id, 'nama' => 'Partai Demokrasi Buleleng', 'jumlah_kader' => 125, 'ketua' => 'I Made Putra', 'sekretaris' => 'Ni Luh Sari', 'bendahara' => 'I Ketut Dana', 'lat' => -8.1100000, 'long' => 115.0900000, 'alamat' => 'Kampung Kajanan', 'created_at' => $now, 'updated_at' => $now],
-            ['id' => '60000000-0000-0000-0000-000000000002', 'desa_id' => $desa[2]->id, 'nama' => 'Partai Rakyat Singaraja', 'jumlah_kader' => 90, 'ketua' => 'I Wayan Adi', 'sekretaris' => 'Ni Made Rina', 'bendahara' => 'I Nyoman Jaya', 'lat' => -8.1170000, 'long' => 115.0970000, 'alamat' => 'Banyuasri', 'created_at' => $now, 'updated_at' => $now],
-        ]);
+        if (!empty($skipped)) {
+            echo "Skipped Partai:\n";
+            foreach ($skipped as $item) {
+                echo "- $item\n";
+            }
+        }
     }
 }
