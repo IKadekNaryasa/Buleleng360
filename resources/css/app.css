@@ -402,12 +402,44 @@ textarea {
 
 .custom-neon-marker span {
     display: block;
-    width: 20px;
-    height: 20px;
-    border: 0;
-    border-radius: 50% 50% 50% 0;
-    background: var(--marker-color);
-    transform: rotate(-45deg);
+    position: relative;
+    width: 24px;
+    height: 50px;
+    background: linear-gradient(#3f0b0b, #3f0b0b) center 19px / 2px 29px
+        no-repeat;
+}
+
+.custom-neon-marker span::before {
+    position: absolute;
+    top: 0;
+    left: 1px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at 32% 25%,
+        #fff 0 7%,
+        #fb7185 12%,
+        #ef233c 38%,
+        #b91c1c 74%,
+        #7f1d1d 100%
+    );
+    border: 2px solid #450a0a;
+    box-shadow:
+        0 0 0 1px rgba(248, 250, 252, 0.85),
+        0 2px 4px rgba(2, 8, 23, 0.55);
+    content: "";
+}
+
+.custom-neon-marker span::after {
+    position: absolute;
+    top: 46px;
+    left: 10px;
+    width: 4px;
+    height: 5px;
+    background: #3f0b0b;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    content: "";
 }
 
 .dashboard-shell {
@@ -593,6 +625,10 @@ textarea {
 .dashboard-map-controls {
     border-radius: 0.75rem;
     box-shadow: 0 18px 45px rgba(2, 8, 23, 0.42);
+}
+
+.dashboard-map-stage .leaflet-tile-pane {
+    filter: invert(1) hue-rotate(180deg) brightness(0.8) contrast(1.05);
 }
 
 .dashboard-map-title {

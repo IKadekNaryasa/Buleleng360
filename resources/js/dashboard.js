@@ -25,8 +25,8 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 const activeLayer = L.layerGroup().addTo(map);
-const desaBoundaryLayer = L.layerGroup().addTo(map);
-const kecamatanBoundaryLayer = L.layerGroup().addTo(map);
+const desaBoundaryLayer = L.layerGroup();
+const kecamatanBoundaryLayer = L.layerGroup();
 const colors = {
     ormas: "#2563eb",
     partai: "#dc2626",
@@ -269,6 +269,8 @@ function renderKecamatanBoundaries() {
             return;
         }
 
+        const kecamatanColor = chartColors[index % chartColors.length];
+
         L.geoJSON(
             {
                 type: "Feature",
@@ -277,9 +279,9 @@ function renderKecamatanBoundaries() {
             },
             {
                 style: {
-                    color: chartColors[index % chartColors.length],
-                    fillColor: chartColors[index % chartColors.length],
-                    fillOpacity: 0.03,
+                    color: kecamatanColor,
+                    fillColor: kecamatanColor,
+                    fillOpacity: 0.5,
                     opacity: 0.9,
                     weight: 3,
                 },
@@ -362,8 +364,8 @@ function markerIcon(category) {
     return L.divIcon({
         className: "custom-neon-marker",
         html: `<span style="--marker-color: ${colors[category]}"></span>`,
-        iconSize: [28, 38],
-        iconAnchor: [14, 38],
+        iconSize: [24, 50],
+        iconAnchor: [12, 50],
     });
 }
 

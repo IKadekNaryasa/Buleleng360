@@ -85,7 +85,7 @@
                         <span>Clear</span>
                     </label>
                     <label class="flex cursor-pointer items-center gap-1 text-[0.6rem] text-sky-200">
-                        <input type="checkbox" data-boundary-toggle="desa" checked class="h-2.5 w-2.5 rounded border-slate-500 bg-slate-800 text-sky-400 focus:ring-1 focus:ring-sky-400">
+                        <input type="checkbox" data-boundary-toggle="desa" class="h-2.5 w-2.5 rounded border-slate-500 bg-slate-800 text-sky-400 focus:ring-1 focus:ring-sky-400">
                         <span>Desa</span>
                     </label>
                     <label class="flex cursor-pointer items-center gap-1 text-[0.6rem] text-emerald-200">
