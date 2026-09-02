@@ -23,6 +23,7 @@
                 <div class="dashboard-section-header border-b border-white/10 px-4 py-3">
                     <div class="flex items-center justify-between gap-3">
                         <h2 class="text-xs font-semibold uppercase tracking-wider text-cyan-300">Organisasi Masyarakat</h2>
+                        <span data-total-count="ormas" class="text-xs font-bold text-cyan-200">0 ormas</span>
                     </div>
                 </div>
                 <div class="dashboard-chart dashboard-chart-panel" data-chart="ormas"></div>
@@ -33,6 +34,7 @@
                 <div class="dashboard-section-header border-b border-white/10 px-4 py-3">
                     <div class="flex items-center justify-between gap-3">
                         <h2 class="text-xs font-semibold uppercase tracking-wider text-lime-300">Partai Politik</h2>
+                        <span data-total-count="partai" class="text-xs font-bold text-lime-200">0 partai</span>
                     </div>
                 </div>
                 <div class="dashboard-chart dashboard-chart-panel" data-chart="partai"></div>
@@ -103,6 +105,7 @@
                 <div class="dashboard-section-header border-b border-white/10 px-4 py-3">
                     <div class="flex items-center justify-between gap-3">
                         <h2 class="text-xs font-semibold uppercase tracking-wider text-amber-300">Sebaran Agama</h2>
+                        <span data-total-count="agama" class="text-xs font-bold text-amber-200">0 agama</span>
                     </div>
                 </div>
                 <div class="dashboard-chart dashboard-chart-panel" data-chart="agama"></div>

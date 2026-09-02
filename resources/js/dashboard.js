@@ -12,10 +12,16 @@ const map = L.map("map", { zoomControl: true }).setView(
     DEFAULT_ZOOM,
 );
 
-L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+map.createPane("kecamatan-boundaries");
+map.getPane("kecamatan-boundaries").style.zIndex = 410;
+map.createPane("desa-boundaries");
+map.getPane("desa-boundaries").style.zIndex = 420;
+
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution:
-        '&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     maxZoom: 19,
+    noWrap: false,
 }).addTo(map);
 
 const activeLayer = L.layerGroup().addTo(map);
@@ -57,7 +63,7 @@ function formatNumber(value) {
 }
 
 function formatPercentage(value) {
-    return `${value.toLocaleString("id-ID", { maximumFractionDigits: 1 })}%`;
+    return `${value.toLocaleString("id-ID", { minimumFractionDigits: 3, maximumFractionDigits: 3 })}%`;
 }
 
 function pieSectorPath(value, total, startAngle) {
@@ -174,50 +180,92 @@ function renderAllCharts() {
     ["ormas", "partai", "agama"].forEach(renderPieChart);
 }
 
+function renderHeaderTotals() {
+    ["ormas", "partai", "agama"].forEach((category) => {
+        const total =
+            category === "agama"
+                ? (dashboardData[0]?.total_agama ?? 0)
+                : dashboardData.reduce(
+                      (sum, kecamatan) => sum + kecamatan[category].length,
+                      0,
+                  );
+        const counter = document.querySelector(
+            `[data-total-count="${category}"]`,
+        );
+
+        if (counter) {
+            counter.textContent = `${formatNumber(total)} ${category}`;
+        }
+    });
+}
+
 function clearMapLayer() {
     activeLayer.clearLayers();
+}
+
+function safeGeoJsonBoundary(boundary) {
+    if (!boundary || typeof boundary !== "object") {
+        return null;
+    }
+
+    if (
+        typeof boundary.type !== "string" ||
+        !Array.isArray(boundary.coordinates)
+    ) {
+        return null;
+    }
+
+    return boundary;
 }
 
 function renderDesaBoundaries() {
     desaBoundaryLayer.clearLayers();
 
-    dashboardData.forEach((kecamatan) => {
-        kecamatan.desa.forEach((desa) => {
-            if (!desa.geojson_boundary) {
-                return;
-            }
+    const features = dashboardData.flatMap((kecamatan) =>
+        kecamatan.desa.flatMap((desa) => {
+            const geometry = safeGeoJsonBoundary(desa.geojson_boundary);
 
-            L.geoJSON(
-                {
-                    type: "Feature",
-                    properties: { nama: desa.nama },
-                    geometry: desa.geojson_boundary,
-                },
-                {
-                    style: {
-                        color: "#38bdf8",
-                        fillColor: "#0e7490",
-                        fillOpacity: 0.08,
-                        opacity: 0.55,
-                        weight: 1,
-                    },
-                    onEachFeature: (feature, layer) => {
-                        layer.bindTooltip(escapeHtml(feature.properties.nama), {
-                            direction: "center",
-                            className: "desa-boundary-tooltip",
-                        });
-                    },
-                },
-            ).addTo(desaBoundaryLayer);
-        });
-    });
+            return geometry
+                ? [
+                      {
+                          type: "Feature",
+                          properties: { nama: desa.nama },
+                          geometry,
+                      },
+                  ]
+                : [];
+        }),
+    );
+
+    L.geoJSON(
+        { type: "FeatureCollection", features },
+        {
+            style: {
+                color: "#38bdf8",
+                fillColor: "#0e7490",
+                fillOpacity: 0.3,
+                opacity: 1,
+                weight: 2,
+            },
+            pane: "desa-boundaries",
+            onEachFeature: (feature, layer) => {
+                layer.options.className = `desa-boundary-${feature.properties.nama.toLowerCase().replaceAll(" ", "-")}`;
+                layer.bindTooltip(escapeHtml(feature.properties.nama), {
+                    direction: "center",
+                    className: "desa-boundary-tooltip",
+                });
+            },
+        },
+    ).addTo(desaBoundaryLayer);
 }
 
 function renderKecamatanBoundaries() {
     kecamatanBoundaryLayer.clearLayers();
 
     dashboardData.forEach((kecamatan, index) => {
-        if (!kecamatan.geojson_boundary) {
+        const geometry = safeGeoJsonBoundary(kecamatan.geojson_boundary);
+
+        if (!geometry) {
             return;
         }
 
@@ -225,7 +273,7 @@ function renderKecamatanBoundaries() {
             {
                 type: "Feature",
                 properties: { nama: kecamatan.nama },
-                geometry: kecamatan.geojson_boundary,
+                geometry,
             },
             {
                 style: {
@@ -235,6 +283,7 @@ function renderKecamatanBoundaries() {
                     opacity: 0.9,
                     weight: 3,
                 },
+                pane: "kecamatan-boundaries",
                 onEachFeature: (feature, layer) => {
                     layer.bindTooltip(escapeHtml(feature.properties.nama), {
                         direction: "center",
@@ -452,6 +501,7 @@ fetch("/dashboard/data")
     .then((data) => {
         dashboardData = data;
         kecamatanById = new Map(data.map((item) => [item.id, item]));
+        renderHeaderTotals();
         renderDesaBoundaries();
         renderKecamatanBoundaries();
         document

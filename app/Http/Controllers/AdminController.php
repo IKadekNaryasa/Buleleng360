@@ -147,7 +147,7 @@ class AdminController extends Controller
             'users' => ['name' => ['required', 'string', 'max:255'], 'nip' => ['required', 'string', 'max:255', Rule::unique('users', 'nip')->ignore($item?->id)], 'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($item?->id)], 'role_id' => ['required', 'exists:roles,id'], 'bidang_id' => ['required', 'exists:bidangs,id'], 'password' => [$item ? 'nullable' : 'required', 'string', 'min:8']],
             'bidang' => ['name' => ['required', 'string', 'max:150', Rule::unique('bidangs', 'name')->ignore($item?->id)]],
             'kecamatan' => ['nama' => ['required', 'string', 'max:100'], 'lat' => ['required', 'numeric', 'between:-90,90'], 'long' => ['required', 'numeric', 'between:-180,180'], 'geojson_boundary' => ['nullable', 'json']],
-            'desa' => ['kecamatan_id' => ['required', 'exists:kecamatans,id'], 'nama' => ['required', 'string', 'max:100'], 'lat' => ['required', 'numeric', 'between:-90,90'], 'long' => ['required', 'numeric', 'between:-180,180'], 'geojson_boundary' => ['required', 'json']],
+            'desa' => ['kecamatan_id' => ['required', 'exists:kecamatans,id'], 'nama' => ['required', 'string', 'max:100'], 'lat' => ['required', 'numeric', 'between:-90,90'], 'long' => ['required', 'numeric', 'between:-180,180'], 'geojson_boundary' => ['nullable', 'json']],
             'partai' => $this->organizationRules('partai'),
             'ormas' => $this->organizationRules('ormas'),
             'agama' => ['agama' => ['required', Rule::in(['islam', 'kristen_protestan', 'kristen_katolik', 'hindu', 'buddha', 'khonghucu', 'lainnya'])]],
@@ -157,6 +157,23 @@ class AdminController extends Controller
 
         $data = Validator::make($request->all(), $rules)->validate();
 
+        if (in_array($resource, ['desa', 'kecamatan'], true)) {
+            $incomingGeojson = $data['geojson_boundary'] ?? null;
+            $isGeojsonBlank = $this->isBlankGeojsonBoundary($incomingGeojson);
+
+            if ($isGeojsonBlank && $item?->geojson_boundary) {
+                $data['geojson_boundary'] = $item->geojson_boundary;
+            }
+
+            if (! $isGeojsonBlank && is_string($incomingGeojson)) {
+                $decoded = json_decode($incomingGeojson, true);
+
+                if (is_array($decoded) && isset($decoded['type'], $decoded['coordinates'])) {
+                    $data['geojson_boundary'] = $decoded;
+                }
+            }
+        }
+
         if ($resource === 'users' && ! empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         } elseif ($resource === 'users') {
@@ -164,6 +181,35 @@ class AdminController extends Controller
         }
 
         return $data;
+    }
+
+    private function isBlankGeojsonBoundary(mixed $value): bool
+    {
+        if ($value === null) {
+            return true;
+        }
+
+        if (is_string($value)) {
+            $trimmed = trim($value);
+
+            if ($trimmed === '' || strtolower($trimmed) === 'null') {
+                return true;
+            }
+
+            $decoded = json_decode($trimmed, true);
+
+            if ($decoded === null && $trimmed !== 'null') {
+                return false;
+            }
+
+            return $decoded === null || count($decoded ?? []) === 0;
+        }
+
+        if (is_array($value)) {
+            return count($value) === 0 || in_array(null, $value, true) || in_array('', $value, true) || in_array('null', $value, true);
+        }
+
+        return false;
     }
 
     private function organizationRules(string $resource): array

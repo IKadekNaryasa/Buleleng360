@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
             DesaSeeder::class,
             PartaiSeeder::class,
             OrmasSeeder::class,
-            // AgamaSeeder::class,
-            // PendudukSeeder::class,
-            // SebaranAgamaSeeder::class,
+            AgamaSeeder::class,
+            PendudukSeeder::class,
+            SebaranAgamaSeeder::class,
         ]);
     }
 }
