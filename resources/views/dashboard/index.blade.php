@@ -111,14 +111,15 @@
                 <div class="dashboard-chart dashboard-chart-panel" data-chart="agama"></div>
             </section>
 
-            {{-- Konflik: sengaja dikosongkan dulu --}}
+            {{-- Konflik --}}
             <section class="dashboard-section dashboard-card-slate flex flex-1 flex-col overflow-hidden">
-                <div class="dashboard-section-header border-b border-slate-100 px-4 py-3">
-                    <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500">Data Konflik</h2>
+                <div class="dashboard-section-header border-b border-white/10 px-4 py-3">
+                    <div class="flex items-center justify-between gap-3">
+                        <h2 class="text-xs font-semibold uppercase tracking-wider text-emerald-300">Data Konflik</h2>
+                        <span data-total-count="konflik" class="text-xs font-bold text-emerald-200">0 konflik</span>
+                    </div>
                 </div>
-                <div class="flex flex-1 items-center justify-center px-4">
-                    <p class="text-sm text-slate-500">Segera hadir.</p>
-                </div>
+                <div class="dashboard-chart dashboard-chart-panel overflow-y-auto" data-list="konflik"></div>
             </section>
 
         </aside>

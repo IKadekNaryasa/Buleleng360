@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
     public function index(): View
     {
-        $kecamatanList = Kecamatan::get()->sortBy(fn (Kecamatan $kecamatan): int => $this->kecamatanSortPosition($kecamatan->nama))->values()->map(function (Kecamatan $kecamatan): Kecamatan {
+        $kecamatanList = Kecamatan::get()->sortBy(fn(Kecamatan $kecamatan): int => $this->kecamatanSortPosition($kecamatan->nama))->values()->map(function (Kecamatan $kecamatan): Kecamatan {
             $kecamatan->kode = $this->kecamatanCode($kecamatan->nama);
 
             return $kecamatan;
@@ -29,13 +29,14 @@ class DashboardController extends Controller
     private function dashboardData(): Collection
     {
         $totalAgama = Agama::count();
+        $konflikByKecamatan = $this->konflikByKecamatan();
 
         return Kecamatan::with([
             'desa.ormas',
             'desa.partai',
             'desa.penduduk',
             'desa.sebaranAgama.agama',
-        ])->get()->sortBy(fn (Kecamatan $kecamatan): int => $this->kecamatanSortPosition($kecamatan->nama))->values()->map(function (Kecamatan $kecamatan) use ($totalAgama): array {
+        ])->get()->sortBy(fn(Kecamatan $kecamatan): int => $this->kecamatanSortPosition($kecamatan->nama))->values()->map(function (Kecamatan $kecamatan) use ($totalAgama, $konflikByKecamatan): array {
             $desa = $kecamatan->desa;
 
             return [
@@ -46,12 +47,12 @@ class DashboardController extends Controller
                 'long' => (float) $kecamatan->long,
                 'total_agama' => $totalAgama,
                 'geojson_boundary' => $kecamatan->geojson_boundary,
-                'desa' => $desa->map(fn ($desaItem): array => [
+                'desa' => $desa->map(fn($desaItem): array => [
                     'nama' => $desaItem->nama,
                     'geojson_boundary' => $desaItem->geojson_boundary,
-                ])->filter(fn (array $desaItem): bool => ! empty($desaItem['geojson_boundary']))->values(),
+                ])->filter(fn(array $desaItem): bool => ! empty($desaItem['geojson_boundary']))->values(),
                 'total_penduduk' => $desa->flatMap->penduduk->where('tahun', 2025)->sum('total_jiwa'),
-                'ormas' => $desa->flatMap(fn ($desaItem) => $desaItem->ormas->map(fn ($item): array => [
+                'ormas' => $desa->flatMap(fn($desaItem) => $desaItem->ormas->map(fn($item): array => [
                     'nama_desa' => $desaItem->nama,
                     'nama' => $item->nama,
                     'jumlah_anggota' => $item->jumlah_anggota,
@@ -62,7 +63,7 @@ class DashboardController extends Controller
                     'lat' => (float) $item->lat,
                     'long' => (float) $item->long,
                 ]))->values(),
-                'partai' => $desa->flatMap(fn ($desaItem) => $desaItem->partai->map(fn ($item): array => [
+                'partai' => $desa->flatMap(fn($desaItem) => $desaItem->partai->map(fn($item): array => [
                     'nama_desa' => $desaItem->nama,
                     'nama' => $item->nama,
                     'jumlah_kader' => $item->jumlah_kader,
@@ -75,9 +76,17 @@ class DashboardController extends Controller
                 ]))->values(),
                 'agama' => $desa->flatMap->sebaranAgama
                     ->groupBy('agama.agama')
-                    ->map(fn ($rows): int => $rows->sum('jumlah_pemeluk'))
+                    ->map(fn($rows): int => $rows->sum('jumlah_pemeluk'))
                     ->sortKeys()
                     ->all(),
+                'konflik' => $konflikByKecamatan->get($kecamatan->nama, collect())->map(fn(array $item): array => [
+                    'nama_desa' => $item['nama_desa'],
+                    'judul_konflik' => $item['judul_konflik'],
+                    'tanggal_konflik' => $item['tanggal_konflik'],
+                    'status' => $item['status'] ?? '-',
+                    'lat' => (float) $item['lat'],
+                    'long' => (float) $item['long'],
+                ])->values(),
             ];
         })->values();
     }
@@ -112,5 +121,18 @@ class DashboardController extends Controller
         ], true);
 
         return $position === false ? PHP_INT_MAX : $position;
+    }
+
+    private function konflikByKecamatan(): Collection
+    {
+        $path = database_path('seeders/data/konflik_data.json');
+
+        if (! file_exists($path)) {
+            return collect();
+        }
+
+        $raw = json_decode(file_get_contents($path), true) ?? [];
+
+        return collect($raw)->groupBy('nama_kecamatan');
     }
 }

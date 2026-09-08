@@ -1,0 +1,29 @@
+[
+    {
+        "nama_desa": "Pakisan",
+        "nama_kecamatan": "Kubutambahan",
+        "judul_konflik": "Konflik Lahan Pertanian",
+        "tanggal_konflik": "2026-01-15",
+        "lat": -8.162411,
+        "long": 115.224026,
+        "status": "Terjadi"
+    },
+    {
+        "nama_desa": "Anturan",
+        "nama_kecamatan": "Buleleng",
+        "judul_konflik": "Konflik Sumber Daya Air",
+        "tanggal_konflik": "2026-01-19",
+        "lat": -8.15665,
+        "long": 115.048986,
+        "status": "ditangani"
+    },
+    {
+        "nama_desa": "Tukad Mungga",
+        "nama_kecamatan": "Buleleng",
+        "judul_konflik": "Konflik Kebisingan PLTD",
+        "tanggal_konflik": "2026-04-15",
+        "lat": -8.143771,
+        "long": 115.05754,
+        "status": "selesai"
+    }
+]

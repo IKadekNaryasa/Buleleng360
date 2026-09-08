@@ -31,6 +31,7 @@ const colors = {
     ormas: "#2563eb",
     partai: "#dc2626",
     agama: "#facc15",
+    konflik: "#22c55e",
 };
 const chartColors = [
     "#2563eb",
@@ -43,6 +44,20 @@ const chartColors = [
     "#65a30d",
     "#ea580c",
 ];
+
+const statusColors = {
+    terjadi: "#dc2626",
+    ditangani: "#f59e0b",
+    selesai: "#16a34a",
+};
+
+function statusBadge(status) {
+    const key = String(status ?? "").toLowerCase();
+    const color = statusColors[key] ?? "#64748b";
+    const label = status ?? "-";
+
+    return `<span style="background:${color}1a;color:${color};border:1px solid ${color}66" class="rounded px-1.5 py-0.5 text-[0.65rem] font-semibold capitalize">${escapeHtml(label)}</span>`;
+}
 
 function escapeHtml(value) {
     return String(value ?? "-").replace(
@@ -181,7 +196,7 @@ function renderAllCharts() {
 }
 
 function renderHeaderTotals() {
-    ["ormas", "partai", "agama"].forEach((category) => {
+    ["ormas", "partai", "agama", "konflik"].forEach((category) => {
         const total =
             category === "agama"
                 ? (dashboardData[0]?.total_agama ?? 0)
@@ -369,32 +384,32 @@ function markerIcon(category) {
     });
 }
 
-function renderOrganization(category, kecamatanId) {
-    const kecamatan = kecamatanById.get(kecamatanId);
+function renderOrganization(category, kecamatanId = null) {
+    const data = kecamatanId
+        ? dashboardData.filter((item) => item.id === kecamatanId)
+        : dashboardData;
 
-    if (!kecamatan) {
-        return;
-    }
-
-    kecamatan[category].forEach((item) => {
-        L.marker([item.lat, item.long], { icon: markerIcon(category) })
-            .bindPopup(
-                `
-                <div class="min-w-[190px] text-slate-900">
-                    <div class="text-sm">Desa: <b>${escapeHtml(item.nama_desa)}</b></div>
-                    <strong class="text-base">${escapeHtml(item.nama)}</strong>
-                    <div class="mt-2 space-y-1 text-sm">
-                        <div>${category === "ormas" ? "Anggota" : "Kader"}: <b>${formatNumber(category === "ormas" ? item.jumlah_anggota : item.jumlah_kader)}</b></div>
-                        <div>Ketua: ${escapeHtml(item.ketua)}</div>
-                        <div>Sekretaris: ${escapeHtml(item.sekretaris)}</div>
-                        <div>Bendahara: ${escapeHtml(item.bendahara)}</div>
-                        <div>Alamat: ${escapeHtml(item.alamat)}</div>
+    data.forEach((kecamatan) => {
+        kecamatan[category].forEach((item) => {
+            L.marker([item.lat, item.long], { icon: markerIcon(category) })
+                .bindPopup(
+                    `
+                    <div class="min-w-[190px] text-slate-900">
+                        <div class="text-sm">Desa: <b>${escapeHtml(item.nama_desa)}</b></div>
+                        <strong class="text-base">${escapeHtml(item.nama)}</strong>
+                        <div class="mt-2 space-y-1 text-sm">
+                            <div>${category === "ormas" ? "Anggota" : "Kader"}: <b>${formatNumber(category === "ormas" ? item.jumlah_anggota : item.jumlah_kader)}</b></div>
+                            <div>Ketua: ${escapeHtml(item.ketua)}</div>
+                            <div>Sekretaris: ${escapeHtml(item.sekretaris)}</div>
+                            <div>Bendahara: ${escapeHtml(item.bendahara)}</div>
+                            <div>Alamat: ${escapeHtml(item.alamat)}</div>
+                        </div>
                     </div>
-                </div>
-            `,
-                { className: "dashboard-dark-popup" },
-            )
-            .addTo(activeLayer);
+                `,
+                    { className: "dashboard-dark-popup" },
+                )
+                .addTo(activeLayer);
+        });
     });
 }
 
@@ -429,6 +444,68 @@ function renderReligion(selectedKecamatanId = null) {
     });
 }
 
+function renderKonflik(kecamatanId = null) {
+    const data = kecamatanId
+        ? dashboardData.filter((item) => item.id === kecamatanId)
+        : dashboardData;
+
+    data.forEach((kecamatan) => {
+        kecamatan.konflik.forEach((item) => {
+            L.marker([item.lat, item.long], { icon: markerIcon("konflik") })
+                .bindPopup(
+                    `
+                    <div class="min-w-[200px] text-slate-900">
+                        <div class="text-sm">Desa: <b>${escapeHtml(item.nama_desa)}</b></div>
+                        <div class="text-sm">Kecamatan: <b>${escapeHtml(kecamatan.nama)}</b></div>
+                        <strong class="text-base">${escapeHtml(item.judul_konflik)}</strong>
+                        <div class="mt-2 text-sm">Tanggal: ${escapeHtml(item.tanggal_konflik)}</div>
+                        <div class="mt-2">${statusBadge(item.status)}</div>
+                    </div>
+                `,
+                    { className: "dashboard-dark-popup" },
+                )
+                .addTo(activeLayer);
+        });
+    });
+}
+
+function renderKonflikList() {
+    const container = document.querySelector('[data-list="konflik"]');
+
+    if (!container) {
+        return;
+    }
+
+    const allKonflik = dashboardData.flatMap((kecamatan) =>
+        kecamatan.konflik.map((item) => ({
+            ...item,
+            nama_kecamatan: kecamatan.nama,
+        })),
+    );
+
+    if (!allKonflik.length) {
+        container.innerHTML =
+            '<div class="dashboard-empty-state px-4 py-3 text-xs text-slate-500">Belum ada data konflik.</div>';
+        return;
+    }
+
+    const rows = allKonflik
+        .map(
+            (item, index) => `
+            <div class="flex items-start justify-between gap-2 border-b border-white/5 px-4 py-2 last:border-0">
+                <div class="flex items-start gap-2">
+                    <span class="shrink-0 text-xs font-semibold text-emerald-300">${index + 1}.</span>
+                    <span class="text-xs text-slate-200">${escapeHtml(item.judul_konflik)} - ${escapeHtml(item.nama_desa)} [${escapeHtml(item.nama_kecamatan)}]</span>
+                </div>
+                <div class="shrink-0">${statusBadge(item.status)}</div>
+            </div>
+        `,
+        )
+        .join("");
+
+    container.innerHTML = `<div class="divide-y divide-white/5">${rows}</div>`;
+}
+
 function activate(category, kecamatanId = null) {
     clearMapLayer();
 
@@ -441,9 +518,12 @@ function activate(category, kecamatanId = null) {
         return;
     }
 
-    if (kecamatanId) {
-        renderOrganization(category, kecamatanId);
+    if (category === "konflik") {
+        renderKonflik(kecamatanId);
+        return;
     }
+
+    renderOrganization(category, kecamatanId);
 }
 
 function bindControls() {
@@ -515,6 +595,7 @@ fetch("/dashboard/data")
                 );
             });
         renderAllCharts();
+        renderKonflikList();
         bindControls();
     })
     .catch((error) => {
