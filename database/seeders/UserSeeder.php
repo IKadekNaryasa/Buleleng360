@@ -29,5 +29,19 @@ class UserSeeder extends Seeder
                 'updated_at' => $now,
             ],
         ]);
+        DB::table('users')->insertOrIgnore([
+            [
+                'id' => '30000000-0000-0000-0000-000000000002',
+                'name' => 'Operator Buleleng360',
+                'email' => 'operator@buleleng360.test',
+                'email_verified_at' => $now,
+                'nip' => '200206092025061002',
+                'password' => Hash::make('12345678'),
+                'role_id' => '10000000-0000-0000-0000-000000000002',
+                'bidang_id' => '20000000-0000-0000-0000-000000000002',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+        ]);
     }
 }

@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Desa;
 use App\Models\Ormas;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class OrmasSeeder extends Seeder
 {
@@ -16,15 +15,21 @@ class OrmasSeeder extends Seeder
     {
         $path = database_path('seeders/data/ormas_data.json');
         $data = json_decode(file_get_contents($path), true);
-        $desaMap = Desa::all()->keyBy('nama');
+
+        // Eager load relasi kecamatan supaya tidak N+1 query
+        $desaMap = Desa::with('kecamatan')->get()
+            ->keyBy(function ($desa) {
+                return $this->normalizeKey($desa->nama, $desa->kecamatan->nama);
+            });
 
         $skipped = [];
 
         foreach ($data as $item) {
-            $desa = $desaMap->get($item['nama_desa']);
+            $key = $this->normalizeKey($item['nama_desa'], $item['nama_kecamatan']);
+            $desa = $desaMap->get($key);
 
             if (!$desa) {
-                $skipped[] = $item['nama_ormas'] . ' (' . $item['nama_desa'] . ')';
+                $skipped[] = $item['nama_ormas'] . ' (' . $item['nama_desa'] . ' - ' . $item['nama_kecamatan'] . ')';
                 continue;
             }
 
@@ -48,5 +53,14 @@ class OrmasSeeder extends Seeder
                 echo "- $item\n";
             }
         }
+    }
+
+
+    private function normalizeKey(string $namaDesa, string $namaKecamatan): string
+    {
+        $desa = strtolower(trim(preg_replace('/\s+/', ' ', $namaDesa)));
+        $kecamatan = strtolower(trim(preg_replace('/\s+/', ' ', $namaKecamatan)));
+
+        return $desa . '|' . $kecamatan;
     }
 }

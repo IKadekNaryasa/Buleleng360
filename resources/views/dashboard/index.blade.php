@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buleleng 360 — Dashboard Pemantauan</title>
+    <title>Satya Dasi — Dashboard Pemantauan</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -47,7 +47,7 @@
             <div id="map" class="h-full w-full"></div>
 
             <div class="dashboard-status-bar absolute left-16 top-4 z-[1000] flex items-center gap-2">
-                <span class="dashboard-status-title">Buleleng 360</span>
+                <span class="dashboard-status-title">Satya Dasi</span>
                 <span class="dashboard-status-chip">MAP VIEW</span>
             </div>
 
