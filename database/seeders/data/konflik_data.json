@@ -9,12 +9,21 @@
         "status": "Terjadi"
     },
     {
+        "nama_desa": "Pakisan",
+        "nama_kecamatan": "Kubutambahan",
+        "judul_konflik": "Konflik Lahan Perumahan",
+        "tanggal_konflik": "2026-01-11",
+        "lat": -8.16242,
+        "long": 115.224027,
+        "status": "ditangani"
+    },
+    {
         "nama_desa": "Anturan",
         "nama_kecamatan": "Buleleng",
         "judul_konflik": "Konflik Sumber Daya Air",
         "tanggal_konflik": "2026-01-19",
-        "lat": -8.15665,
-        "long": 115.048986,
+        "lat": -8.158604,
+        "long": 115.039974,
         "status": "ditangani"
     },
     {

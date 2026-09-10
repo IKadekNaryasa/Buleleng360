@@ -215,6 +215,7 @@ function renderHeaderTotals() {
 }
 
 function clearMapLayer() {
+    openSpiderfy = null;
     activeLayer.clearLayers();
 }
 
@@ -384,31 +385,168 @@ function markerIcon(category) {
     });
 }
 
+let openSpiderfy = null;
+
+function coordKey(lat, long) {
+    return `${Number(lat).toFixed(4)}_${Number(long).toFixed(4)}`;
+}
+
+function groupByCoordinate(items) {
+    const groups = new Map();
+
+    items.forEach((item) => {
+        const key = coordKey(item.lat, item.long);
+
+        if (!groups.has(key)) {
+            groups.set(key, []);
+        }
+
+        groups.get(key).push(item);
+    });
+
+    return Array.from(groups.values());
+}
+
+function clusterIcon(category, count) {
+    const color = colors[category] ?? "#38bdf8";
+
+    return L.divIcon({
+        className: "custom-neon-cluster",
+        html: `
+            <div style="
+                width:30px;height:30px;border-radius:50%;
+                background:${color};
+                border:2px solid rgba(255,255,255,0.85);
+                box-shadow:0 0 10px ${color}aa, 0 0 2px rgba(0,0,0,0.6);
+                display:flex;align-items:center;justify-content:center;
+                color:#0b1220;font-weight:700;font-size:12px;
+                font-family:'DM Sans',sans-serif;
+            ">${count}</div>
+        `,
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
+    });
+}
+
+function spiderfyPositions(center, count) {
+    const centerPoint = map.latLngToLayerPoint(center);
+    const radiusPx = 42 + count * 3;
+    const positions = [];
+
+    for (let i = 0; i < count; i++) {
+        const angle = (2 * Math.PI * i) / count - Math.PI / 2;
+        const point = L.point(
+            centerPoint.x + radiusPx * Math.cos(angle),
+            centerPoint.y + radiusPx * Math.sin(angle),
+        );
+
+        positions.push(map.layerPointToLatLng(point));
+    }
+
+    return positions;
+}
+
+function addSpiderfiableGroup(layerGroup, category, items, buildMarker) {
+    if (items.length === 1) {
+        buildMarker(items[0]).addTo(layerGroup);
+        return;
+    }
+
+    const center = L.latLng(items[0].lat, items[0].long);
+    const legLayer = L.layerGroup();
+    let spiderMarkers = [];
+    let spiderfied = false;
+
+    const cluster = L.marker(center, {
+        icon: clusterIcon(category, items.length),
+        zIndexOffset: 1000,
+    });
+
+    function closeSpider() {
+        if (!spiderfied) return;
+
+        legLayer.clearLayers();
+        layerGroup.removeLayer(legLayer);
+        spiderMarkers.forEach((marker) => layerGroup.removeLayer(marker));
+        spiderMarkers = [];
+        cluster.setOpacity(1);
+        spiderfied = false;
+
+        if (openSpiderfy === closeSpider) {
+            openSpiderfy = null;
+        }
+    }
+
+    function openSpider() {
+        if (openSpiderfy && openSpiderfy !== closeSpider) {
+            openSpiderfy();
+        }
+
+        const positions = spiderfyPositions(center, items.length);
+
+        items.forEach((item, index) => {
+            const marker = buildMarker(item);
+            marker.setLatLng(positions[index]);
+            marker.addTo(layerGroup);
+            spiderMarkers.push(marker);
+
+            L.polyline([center, positions[index]], {
+                color: "rgba(148,163,184,0.9)",
+                weight: 1.5,
+                dashArray: "4,4",
+                interactive: false,
+            }).addTo(legLayer);
+        });
+
+        legLayer.addTo(layerGroup);
+        cluster.setOpacity(0.35);
+        spiderfied = true;
+        openSpiderfy = closeSpider;
+    }
+
+    cluster.on("click", (event) => {
+        L.DomEvent.stopPropagation(event);
+        spiderfied ? closeSpider() : openSpider();
+    });
+
+    cluster.addTo(layerGroup);
+}
+
+map.on("zoomstart movestart click", () => {
+    if (openSpiderfy) {
+        openSpiderfy();
+    }
+});
+
 function renderOrganization(category, kecamatanId = null) {
     const data = kecamatanId
         ? dashboardData.filter((item) => item.id === kecamatanId)
         : dashboardData;
 
     data.forEach((kecamatan) => {
-        kecamatan[category].forEach((item) => {
-            L.marker([item.lat, item.long], { icon: markerIcon(category) })
-                .bindPopup(
+        const groups = groupByCoordinate(kecamatan[category]);
+
+        groups.forEach((group) => {
+            addSpiderfiableGroup(activeLayer, category, group, (item) =>
+                L.marker([item.lat, item.long], {
+                    icon: markerIcon(category),
+                }).bindPopup(
                     `
-                    <div class="min-w-[190px] text-slate-900">
-                        <div class="text-sm">Desa: <b>${escapeHtml(item.nama_desa)}</b></div>
-                        <strong class="text-base">${escapeHtml(item.nama)}</strong>
-                        <div class="mt-2 space-y-1 text-sm">
-                            <div>${category === "ormas" ? "Anggota" : "Kader"}: <b>${formatNumber(category === "ormas" ? item.jumlah_anggota : item.jumlah_kader)}</b></div>
-                            <div>Ketua: ${escapeHtml(item.ketua)}</div>
-                            <div>Sekretaris: ${escapeHtml(item.sekretaris)}</div>
-                            <div>Bendahara: ${escapeHtml(item.bendahara)}</div>
-                            <div>Alamat: ${escapeHtml(item.alamat)}</div>
+                        <div class="min-w-[190px] text-slate-900">
+                            <div class="text-sm">Desa: <b>${escapeHtml(item.nama_desa)}</b></div>
+                            <strong class="text-base">${escapeHtml(item.nama)}</strong>
+                            <div class="mt-2 space-y-1 text-sm">
+                                <div>${category === "ormas" ? "Anggota" : "Kader"}: <b>${formatNumber(category === "ormas" ? item.jumlah_anggota : item.jumlah_kader)}</b></div>
+                                <div>Ketua: ${escapeHtml(item.ketua)}</div>
+                                <div>Sekretaris: ${escapeHtml(item.sekretaris)}</div>
+                                <div>Bendahara: ${escapeHtml(item.bendahara)}</div>
+                                <div>Alamat: ${escapeHtml(item.alamat)}</div>
+                            </div>
                         </div>
-                    </div>
-                `,
+                    `,
                     { className: "dashboard-dark-popup" },
-                )
-                .addTo(activeLayer);
+                ),
+            );
         });
     });
 }
@@ -450,21 +588,25 @@ function renderKonflik(kecamatanId = null) {
         : dashboardData;
 
     data.forEach((kecamatan) => {
-        kecamatan.konflik.forEach((item) => {
-            L.marker([item.lat, item.long], { icon: markerIcon("konflik") })
-                .bindPopup(
+        const groups = groupByCoordinate(kecamatan.konflik);
+
+        groups.forEach((group) => {
+            addSpiderfiableGroup(activeLayer, "konflik", group, (item) =>
+                L.marker([item.lat, item.long], {
+                    icon: markerIcon("konflik"),
+                }).bindPopup(
                     `
-                    <div class="min-w-[200px] text-slate-900">
-                        <div class="text-sm">Desa: <b>${escapeHtml(item.nama_desa)}</b></div>
-                        <div class="text-sm">Kecamatan: <b>${escapeHtml(kecamatan.nama)}</b></div>
-                        <strong class="text-base">${escapeHtml(item.judul_konflik)}</strong>
-                        <div class="mt-2 text-sm">Tanggal: ${escapeHtml(item.tanggal_konflik)}</div>
-                        <div class="mt-2">${statusBadge(item.status)}</div>
-                    </div>
-                `,
+                        <div class="min-w-[200px] text-slate-900">
+                            <div class="text-sm">Desa: <b>${escapeHtml(item.nama_desa)}</b></div>
+                            <div class="text-sm">Kecamatan: <b>${escapeHtml(kecamatan.nama)}</b></div>
+                            <strong class="text-base">${escapeHtml(item.judul_konflik)}</strong>
+                            <div class="mt-2 text-sm">Tanggal: ${escapeHtml(item.tanggal_konflik)}</div>
+                            <div class="mt-2">${statusBadge(item.status)}</div>
+                        </div>
+                    `,
                     { className: "dashboard-dark-popup" },
-                )
-                .addTo(activeLayer);
+                ),
+            );
         });
     });
 }

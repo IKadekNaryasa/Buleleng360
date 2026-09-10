@@ -48,7 +48,7 @@
 
             <div class="dashboard-status-bar absolute left-16 top-4 z-[1000] flex items-center gap-2">
                 <span class="dashboard-status-title">Satya Dasi</span>
-                <span class="dashboard-status-chip">MAP VIEW</span>
+                <!-- <span class="dashboard-status-chip">MAP VIEW</span> -->
             </div>
 
             <div class="dashboard-map-controls absolute right-4 top-4 z-[1000] w-44 rounded-md border border-cyan-300/30 bg-[#0b1829]/95 p-2 shadow-lg shadow-cyan-950/30 backdrop-blur sm:w-52">
@@ -80,10 +80,6 @@
                         <input type="checkbox" data-layer-toggle="konflik" class="h-2.5 w-2.5 rounded border-slate-500 bg-slate-800 text-green-400 focus:ring-1 focus:ring-green-400">
                         <span>Konflik</span>
                     </label>
-                    <label class="flex cursor-pointer items-center gap-1 text-[0.6rem] text-slate-300">
-                        <input type="checkbox" data-clear-map class="h-2.5 w-2.5 rounded border-slate-500 bg-slate-800 text-slate-300 focus:ring-1 focus:ring-slate-400">
-                        <span>Clear</span>
-                    </label>
                     <label class="flex cursor-pointer items-center gap-1 text-[0.6rem] text-sky-200">
                         <input type="checkbox" data-boundary-toggle="desa" class="h-2.5 w-2.5 rounded border-slate-500 bg-slate-800 text-sky-400 focus:ring-1 focus:ring-sky-400">
                         <span>Desa</span>
@@ -91,6 +87,10 @@
                     <label class="flex cursor-pointer items-center gap-1 text-[0.6rem] text-emerald-200">
                         <input type="checkbox" data-boundary-toggle="kecamatan" checked class="h-2.5 w-2.5 rounded border-slate-500 bg-slate-800 text-emerald-400 focus:ring-1 focus:ring-emerald-400">
                         <span>Kecamatan</span>
+                    </label>
+                    <label class="flex cursor-pointer items-center gap-1 text-[0.6rem] text-slate-300">
+                        <input type="checkbox" data-clear-map class="h-2.5 w-2.5 rounded border-slate-500 bg-slate-800 text-slate-300 focus:ring-1 focus:ring-slate-400">
+                        <span>Clear</span>
                     </label>
                 </div>
             </div>
