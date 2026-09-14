@@ -6,6 +6,7 @@ const DEFAULT_ZOOM = 9.5;
 let dashboardData = [];
 let kecamatanById = new Map();
 let selectedKecamatanId = null;
+let kecamatanBoundaryLayers = new Map();
 
 const map = L.map("map", { zoomControl: true }).setView(
     BULELENG_CENTER,
@@ -217,6 +218,7 @@ function renderHeaderTotals() {
 function clearMapLayer() {
     openSpiderfy = null;
     activeLayer.clearLayers();
+    restoreDefaultBoundaryColors();
 }
 
 function safeGeoJsonBoundary(boundary) {
@@ -277,6 +279,7 @@ function renderDesaBoundaries() {
 
 function renderKecamatanBoundaries() {
     kecamatanBoundaryLayer.clearLayers();
+    kecamatanBoundaryLayers.clear();
 
     dashboardData.forEach((kecamatan, index) => {
         const geometry = safeGeoJsonBoundary(kecamatan.geojson_boundary);
@@ -287,7 +290,7 @@ function renderKecamatanBoundaries() {
 
         const kecamatanColor = chartColors[index % chartColors.length];
 
-        L.geoJSON(
+        const geoJsonLayer = L.geoJSON(
             {
                 type: "Feature",
                 properties: { nama: kecamatan.nama },
@@ -310,6 +313,11 @@ function renderKecamatanBoundaries() {
                 },
             },
         ).addTo(kecamatanBoundaryLayer);
+
+        kecamatanBoundaryLayers.set(kecamatan.nama, {
+            layer: geoJsonLayer,
+            defaultColor: kecamatanColor,
+        });
     });
 }
 
@@ -322,6 +330,34 @@ function toggleBoundaryLayer(category, isVisible) {
     } else {
         map.removeLayer(layer);
     }
+}
+
+function konflikSeverityColor(count) {
+    if (count > 3) return "#dc2626"; // merah
+    if (count >= 1) return "#facc15"; // kuning
+    return "#22c55e"; // hijau
+}
+
+function applyKonflikBoundaryColors() {
+    kecamatanBoundaryLayers.forEach(({ layer }, nama) => {
+        const kecamatan = dashboardData.find((item) => item.nama === nama);
+        const count = kecamatan ? kecamatan.konflik.length : 0;
+        const color = konflikSeverityColor(count);
+
+        layer.setStyle({
+            color,
+            fillColor: color,
+        });
+    });
+}
+
+function restoreDefaultBoundaryColors() {
+    kecamatanBoundaryLayers.forEach(({ layer, defaultColor }) => {
+        layer.setStyle({
+            color: defaultColor,
+            fillColor: defaultColor,
+        });
+    });
 }
 
 function focusKecamatan(kecamatanId) {
@@ -364,7 +400,7 @@ function selectKecamatan(kecamatanId) {
 
 function clearDashboardSelection() {
     selectedKecamatanId = null;
-    activeLayer.clearLayers();
+    clearMapLayer();
     document.querySelectorAll('input[name="kecamatan"]').forEach((radio) => {
         radio.checked = false;
     });
@@ -655,13 +691,14 @@ function activate(category, kecamatanId = null) {
         focusKecamatan(kecamatanId);
     }
 
-    if (category === "agama") {
-        renderReligion(kecamatanId);
+    if (category === "konflik") {
+        applyKonflikBoundaryColors();
+        renderKonflik(kecamatanId);
         return;
     }
 
-    if (category === "konflik") {
-        renderKonflik(kecamatanId);
+    if (category === "agama") {
+        renderReligion(kecamatanId);
         return;
     }
 

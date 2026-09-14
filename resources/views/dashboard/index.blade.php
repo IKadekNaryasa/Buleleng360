@@ -47,7 +47,7 @@
             <div id="map" class="h-full w-full"></div>
 
             <div class="dashboard-status-bar absolute left-16 top-4 z-[1000] flex items-center gap-2">
-                <span class="dashboard-status-title">Satya Dasi</span>
+                <span class="dashboard-status-title text-4xl font-semibold">Satya Dasi</span>
                 <!-- <span class="dashboard-status-chip">MAP VIEW</span> -->
             </div>
 

@@ -1,5 +1,65 @@
 [
     {
+        "nama_ormas": "DEWAN PENGURUS DAERAH WAHDAH ISLAMIYAH KABUPATEN BULELENG",
+        "nama_desa": "Kelurahan Kampung Kajanan",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_anggota": 0,
+        "ketua": "Riono Junianto, S.E",
+        "sekretaris": "M. Ibnu Arrozi, S.H",
+        "bendahara": "Dian Permana",
+        "lat": -8.105955,
+        "long": 115.090835,
+        "alamat": "Jln. Hasanudin No.56 Kel. Kampung Kajanan, Kec. Buleleng"
+    },
+    {
+        "nama_ormas": "PERKUMPULAN PEMBERANTASAN TUBERKULOSIS INDONESIA CABANG BULELENG",
+        "nama_desa": "Kelurahan Banjartegal",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_anggota": 0,
+        "ketua": "dr. Ni Made Sukarmini, M.AP",
+        "sekretaris": "Ni Nyoman Neli, S.E., M.AP",
+        "bendahara": "Desak Made Sugiartini",
+        "lat": -8.117408,
+        "long": 115.087508,
+        "alamat": "Jln. Abimanyu No.3 Singaraja, Ling. Tegal Anyar, Kel. Banjar Tegal, Kec. Buleleng"
+    },
+    {
+        "nama_ormas": "Yayasan Pasraman Pinandita Brahma Vidya Samgraha",
+        "nama_desa": "Kelurahan Penarukan",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_anggota": 0,
+        "ketua": "PUTU ERYANA EKA PUTRA,SP",
+        "sekretaris": "I KOMANG ARYANTO SUDHARMA",
+        "bendahara": "I KADEK PUJA ANTARA",
+        "lat": -8.1132,
+        "long": 115.1158,
+        "alamat": "Jalan setiabudi no. 108 Penarungan"
+    },
+    {
+        "nama_ormas": "DEWAN PENGURUS CABANG LASKAR BALI SHANTI KABUPATEN BULELENG",
+        "nama_desa": "Kelurahan Kaliuntu",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_anggota": 0,
+        "ketua": "Ketut Suarjana",
+        "sekretaris": "Gede Dandi",
+        "bendahara": "I Gusti Agung Jelantik Telas",
+        "lat": -8.111052,
+        "long": 115.087807,
+        "alamat": "Jln. Kenanga No.10 Kelurahan Kaliuntu, Kecamatan Buleleng"
+    },
+    {
+        "nama_ormas": "PENGURUS DAERAH IKATAN PERSAUDARAAN HAJI INDONESIA KABUPATEN BULELENG",
+        "nama_desa": "Kelurahan Kampung Kajanan",
+        "nama_kecamatan": "Buleleng",
+        "jumlah_anggota": 0,
+        "ketua": "H. Abdurrahman Said, Lc",
+        "sekretaris": "H. Ridha Surachman",
+        "bendahara": "Dra. Hj. Supartini S",
+        "lat": -8.106107,
+        "long": 115.090449,
+        "alamat": "Jalan Imam Bonjol No.65 RT.011 Ling. Kajanan Tengah, Kelurahan Kampung Kajanan, Kecamatan Buleleng, Kabupaten Buleleng"
+    },
+    {
         "nama_ormas": "YAYASAN INTI ALAM BALI",
         "nama_desa": "Dencarik",
         "nama_kecamatan": "Banjar",
