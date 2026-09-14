@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Satya Dasi — Dashboard Pemantauan</title>
+    <title>Satya Dasi — Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
             <section class="dashboard-section dashboard-card-emerald flex flex-1 flex-col overflow-hidden">
                 <div class="dashboard-section-header border-b border-white/10 px-4 py-3">
                     <div class="flex items-center justify-between gap-3">
-                        <h2 class="text-xs font-semibold uppercase tracking-wider text-cyan-300">Organisasi Masyarakat</h2>
+                        <h2 class="text-xs font-semibold uppercase tracking-wider text-cyan-300"><a href="https://simpelgaspol.bulelengkab.go.id/data/organisasi?js=ormas" target="_blank">Organisasi Masyarakat</a></h2>
                         <span data-total-count="ormas" class="text-xs font-bold text-cyan-200">0 ormas</span>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
             <section class="dashboard-section dashboard-card-red flex flex-1 flex-col overflow-hidden">
                 <div class="dashboard-section-header border-b border-white/10 px-4 py-3">
                     <div class="flex items-center justify-between gap-3">
-                        <h2 class="text-xs font-semibold uppercase tracking-wider text-lime-300">Partai Politik</h2>
+                        <h2 class="text-xs font-semibold uppercase tracking-wider text-lime-300"><a href="https://simpelgaspol.bulelengkab.go.id/data/organisasi?js=partai" target="_blank">Partai Politik</a></h2>
                         <span data-total-count="partai" class="text-xs font-bold text-lime-200">0 partai</span>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
             <div id="map" class="h-full w-full"></div>
 
             <div class="dashboard-status-bar absolute left-16 top-4 z-[1000] flex items-center gap-2">
-                <span class="dashboard-status-title text-4xl font-semibold">Satya Dasi</span>
+                <h1 class="dashboard-status-title text-4xl font-semibold">Satya Dasi</h1>
                 <!-- <span class="dashboard-status-chip">MAP VIEW</span> -->
             </div>
 
@@ -115,7 +115,7 @@
             <section class="dashboard-section dashboard-card-slate flex flex-1 flex-col overflow-hidden">
                 <div class="dashboard-section-header border-b border-white/10 px-4 py-3">
                     <div class="flex items-center justify-between gap-3">
-                        <h2 class="text-xs font-semibold uppercase tracking-wider text-emerald-300">Data Konflik</h2>
+                        <h2 class="text-xs font-semibold uppercase tracking-wider text-emerald-300"><a href="#" target="_blank">Data Konflik</a></h2>
                         <span data-total-count="konflik" class="text-xs font-bold text-emerald-200">0 konflik</span>
                     </div>
                 </div>
