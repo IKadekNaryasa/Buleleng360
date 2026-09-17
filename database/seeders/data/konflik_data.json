@@ -2,34 +2,25 @@
     {
         "nama_desa": "Pakisan",
         "nama_kecamatan": "Kubutambahan",
-        "judul_konflik": "Konflik Lahan Pertanian",
+        "judul_konflik": "Judul Konflik Kubutambahan 1",
         "tanggal_konflik": "2026-01-15",
         "lat": -8.162411,
         "long": 115.224026,
         "status": "Terjadi"
     },
     {
-        "nama_desa": "Pakisan",
+        "nama_desa": "Bulian",
         "nama_kecamatan": "Kubutambahan",
-        "judul_konflik": "Konflik Lahan Perumahan",
+        "judul_konflik": "Judul Konflik Kubutambahan 2",
         "tanggal_konflik": "2026-01-11",
-        "lat": -8.16242,
-        "long": 115.224027,
+        "lat": -8.093198,
+        "long": 115.21007,
         "status": "ditangani"
     },
     {
-        "nama_desa": "Pakisan",
+        "nama_desa": "Bukti",
         "nama_kecamatan": "Kubutambahan",
-        "judul_konflik": "Konflik Lahan Perumahan",
-        "tanggal_konflik": "2026-01-11",
-        "lat": -8.16242,
-        "long": 115.224027,
-        "status": "ditangani"
-    },
-    {
-        "nama_desa": "Pakisan",
-        "nama_kecamatan": "Kubutambahan",
-        "judul_konflik": "Konflik Lahan Perumahan",
+        "judul_konflik": "Judul Konflik Kubutambahan 3",
         "tanggal_konflik": "2026-01-11",
         "lat": -8.16242,
         "long": 115.224027,
@@ -38,7 +29,7 @@
     {
         "nama_desa": "Anturan",
         "nama_kecamatan": "Buleleng",
-        "judul_konflik": "Konflik Sumber Daya Air",
+        "judul_konflik": "Konflik Buleleng 1",
         "tanggal_konflik": "2026-01-19",
         "lat": -8.158604,
         "long": 115.039974,
@@ -47,10 +38,28 @@
     {
         "nama_desa": "Tukad Mungga",
         "nama_kecamatan": "Buleleng",
-        "judul_konflik": "Konflik Kebisingan PLTD",
+        "judul_konflik": "Konflik Buleleng 2",
         "tanggal_konflik": "2026-04-15",
         "lat": -8.143771,
         "long": 115.05754,
+        "status": "selesai"
+    },
+    {
+        "nama_desa": "Kelurahan Kampung Kajanan",
+        "nama_kecamatan": "Buleleng",
+        "judul_konflik": "Konflik Buleleng 3",
+        "tanggal_konflik": "2026-04-15",
+        "lat": -8.106424,
+        "long": 115.090832,
+        "status": "selesai"
+    },
+    {
+        "nama_desa": "Kelurahan Banjartegal",
+        "nama_kecamatan": "Buleleng",
+        "judul_konflik": "Konflik Buleleng 4",
+        "tanggal_konflik": "2026-04-15",
+        "lat": -8.121252,
+        "long": 115.091506,
         "status": "selesai"
     }
 ]

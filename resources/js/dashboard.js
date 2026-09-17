@@ -52,6 +52,7 @@ const statusColors = {
     selesai: "#16a34a",
 };
 
+// Membuat badge HTML berwarna sesuai status konflik (terjadi/ditangani/selesai)
 function statusBadge(status) {
     const key = String(status ?? "").toLowerCase();
     const color = statusColors[key] ?? "#64748b";
@@ -60,6 +61,7 @@ function statusBadge(status) {
     return `<span style="background:${color}1a;color:${color};border:1px solid ${color}66" class="rounded px-1.5 py-0.5 text-[0.65rem] font-semibold capitalize">${escapeHtml(label)}</span>`;
 }
 
+// Meng-escape karakter HTML berbahaya agar aman disisipkan ke innerHTML
 function escapeHtml(value) {
     return String(value ?? "-").replace(
         /[&<>'"]/g,
@@ -74,14 +76,17 @@ function escapeHtml(value) {
     );
 }
 
+// Memformat angka ke format ribuan gaya Indonesia (contoh: 1.000)
 function formatNumber(value) {
     return new Intl.NumberFormat("id-ID").format(value ?? 0);
 }
 
+// Memformat angka menjadi string persentase dengan 3 desimal
 function formatPercentage(value) {
     return `${value.toLocaleString("id-ID", { minimumFractionDigits: 3, maximumFractionDigits: 3 })}%`;
 }
 
+// Menghitung path SVG "irisan pie" berdasarkan nilai, total, dan sudut awal
 function pieSectorPath(value, total, startAngle) {
     const endAngle = startAngle + (value / total) * Math.PI * 2;
     const center = 80;
@@ -99,6 +104,7 @@ function pieSectorPath(value, total, startAngle) {
     return `M ${center} ${center} L ${start[0]} ${start[1]} A ${radius} ${radius} 0 ${largeArc} 1 ${end[0]} ${end[1]} Z`;
 }
 
+// Merender satu diagram pie (ormas/partai/agama) beserta legend-nya ke elemen [data-chart]
 function renderPieChart(category) {
     const chart = document.querySelector(`[data-chart="${category}"]`);
 
@@ -192,10 +198,12 @@ function renderPieChart(category) {
     chart.innerHTML = `<div class="dashboard-chart-body"><svg class="dashboard-pie" viewBox="0 0 160 160" role="img" aria-label="${title}">${svgSectors}</svg><div class="dashboard-chart-legend">${legend}</div></div>`;
 }
 
+// Memanggil renderPieChart untuk semua kategori (ormas, partai, agama) sekaligus
 function renderAllCharts() {
     ["ormas", "partai", "agama"].forEach(renderPieChart);
 }
 
+// Menghitung dan menampilkan total angka (ormas/partai/agama/konflik) di header tiap panel
 function renderHeaderTotals() {
     ["ormas", "partai", "agama", "konflik"].forEach((category) => {
         const total =
@@ -215,12 +223,14 @@ function renderHeaderTotals() {
     });
 }
 
+// Mengosongkan layer marker aktif di peta dan mengembalikan warna batas kecamatan ke default
 function clearMapLayer() {
     openSpiderfy = null;
     activeLayer.clearLayers();
     restoreDefaultBoundaryColors();
 }
 
+// Memvalidasi struktur objek GeoJSON boundary sebelum dipakai (mencegah error render)
 function safeGeoJsonBoundary(boundary) {
     if (!boundary || typeof boundary !== "object") {
         return null;
@@ -236,6 +246,7 @@ function safeGeoJsonBoundary(boundary) {
     return boundary;
 }
 
+// Menggambar seluruh batas wilayah desa (dari semua kecamatan) ke layer desaBoundaryLayer
 function renderDesaBoundaries() {
     desaBoundaryLayer.clearLayers();
 
@@ -277,6 +288,7 @@ function renderDesaBoundaries() {
     ).addTo(desaBoundaryLayer);
 }
 
+// Menggambar batas wilayah tiap kecamatan dengan warna default (dari chartColors) dan menyimpan referensinya
 function renderKecamatanBoundaries() {
     kecamatanBoundaryLayer.clearLayers();
     kecamatanBoundaryLayers.clear();
@@ -321,6 +333,7 @@ function renderKecamatanBoundaries() {
     });
 }
 
+// Menampilkan atau menyembunyikan layer batas wilayah (desa/kecamatan) di peta
 function toggleBoundaryLayer(category, isVisible) {
     const layer =
         category === "desa" ? desaBoundaryLayer : kecamatanBoundaryLayer;
@@ -332,12 +345,14 @@ function toggleBoundaryLayer(category, isVisible) {
     }
 }
 
+// Menentukan warna berdasarkan tingkat keparahan jumlah konflik (merah/kuning/hijau)
 function konflikSeverityColor(count) {
     if (count > 3) return "#dc2626"; // merah
     if (count >= 1) return "#facc15"; // kuning
     return "#22c55e"; // hijau
 }
 
+// Mewarnai ulang seluruh polygon kecamatan sesuai jumlah konflik di masing-masing wilayah
 function applyKonflikBoundaryColors() {
     kecamatanBoundaryLayers.forEach(({ layer }, nama) => {
         const kecamatan = dashboardData.find((item) => item.nama === nama);
@@ -351,6 +366,7 @@ function applyKonflikBoundaryColors() {
     });
 }
 
+// Mengembalikan warna polygon kecamatan ke warna default masing-masing
 function restoreDefaultBoundaryColors() {
     kecamatanBoundaryLayers.forEach(({ layer, defaultColor }) => {
         layer.setStyle({
@@ -360,6 +376,7 @@ function restoreDefaultBoundaryColors() {
     });
 }
 
+// Menggerakkan (fly-to) peta menuju koordinat kecamatan yang dipilih
 function focusKecamatan(kecamatanId) {
     const kecamatan = kecamatanById.get(kecamatanId);
 
@@ -372,11 +389,13 @@ function focusKecamatan(kecamatanId) {
     });
 }
 
+// Mengambil kategori layer yang sedang aktif/dicentang (ormas/partai/agama/konflik)
 function activeCategory() {
     return document.querySelector("[data-layer-toggle]:checked")?.dataset
         .layerToggle;
 }
 
+// Menandai kecamatan yang dipilih (highlight tombol) lalu menampilkan data sesuai layer aktif atau fokus peta saja
 function selectKecamatan(kecamatanId) {
     selectedKecamatanId = kecamatanId;
     document.querySelectorAll("[data-kecamatan-id]").forEach((button) => {
@@ -398,6 +417,7 @@ function selectKecamatan(kecamatanId) {
     }
 }
 
+// Mereset seluruh pilihan dashboard: hapus layer, uncheck semua radio/checkbox, hapus highlight
 function clearDashboardSelection() {
     selectedKecamatanId = null;
     clearMapLayer();
@@ -412,6 +432,7 @@ function clearDashboardSelection() {
     });
 }
 
+// Membuat icon marker (divIcon) berwarna sesuai kategori (ormas/partai/agama/konflik)
 function markerIcon(category) {
     return L.divIcon({
         className: "custom-neon-marker",
@@ -423,10 +444,12 @@ function markerIcon(category) {
 
 let openSpiderfy = null;
 
+// Membuat key unik string dari koordinat lat/long (dibulatkan 4 desimal) untuk pengelompokan
 function coordKey(lat, long) {
     return `${Number(lat).toFixed(4)}_${Number(long).toFixed(4)}`;
 }
 
+// Mengelompokkan item-item berdasarkan koordinat yang sama (untuk deteksi lokasi yang bertumpuk)
 function groupByCoordinate(items) {
     const groups = new Map();
 
@@ -443,6 +466,7 @@ function groupByCoordinate(items) {
     return Array.from(groups.values());
 }
 
+// Membuat icon marker cluster berbentuk lingkaran berisi angka jumlah item yang bertumpuk
 function clusterIcon(category, count) {
     const color = colors[category] ?? "#38bdf8";
 
@@ -464,6 +488,7 @@ function clusterIcon(category, count) {
     });
 }
 
+// Menghitung posisi-posisi melingkar (spiderfy) di sekitar titik pusat untuk memisahkan marker yang bertumpuk
 function spiderfyPositions(center, count) {
     const centerPoint = map.latLngToLayerPoint(center);
     const radiusPx = 42 + count * 3;
@@ -482,6 +507,7 @@ function spiderfyPositions(center, count) {
     return positions;
 }
 
+// Menambahkan grup marker ke peta: marker tunggal langsung ditampilkan, marker bertumpuk jadi cluster yang bisa di-klik untuk "spiderfy" (menyebar)
 function addSpiderfiableGroup(layerGroup, category, items, buildMarker) {
     if (items.length === 1) {
         buildMarker(items[0]).addTo(layerGroup);
@@ -498,6 +524,7 @@ function addSpiderfiableGroup(layerGroup, category, items, buildMarker) {
         zIndexOffset: 1000,
     });
 
+    // Menutup tampilan spiderfy: menghapus marker & garis penghubung yang sudah disebar
     function closeSpider() {
         if (!spiderfied) return;
 
@@ -513,6 +540,7 @@ function addSpiderfiableGroup(layerGroup, category, items, buildMarker) {
         }
     }
 
+    // Membuka tampilan spiderfy: menyebar marker yang bertumpuk ke posisi melingkar beserta garis penghubung
     function openSpider() {
         if (openSpiderfy && openSpiderfy !== closeSpider) {
             openSpiderfy();
@@ -548,12 +576,14 @@ function addSpiderfiableGroup(layerGroup, category, items, buildMarker) {
     cluster.addTo(layerGroup);
 }
 
+// Menutup spiderfy yang sedang terbuka saat peta mulai di-zoom, digeser, atau diklik
 map.on("zoomstart movestart click", () => {
     if (openSpiderfy) {
         openSpiderfy();
     }
 });
 
+// Merender marker ormas/partai ke peta (semua kecamatan atau satu kecamatan tertentu) lengkap dengan popup detail
 function renderOrganization(category, kecamatanId = null) {
     const data = kecamatanId
         ? dashboardData.filter((item) => item.id === kecamatanId)
@@ -587,6 +617,7 @@ function renderOrganization(category, kecamatanId = null) {
     });
 }
 
+// Merender marker sebaran agama per kecamatan (satu marker per kecamatan) dengan popup rincian persentase agama
 function renderReligion(selectedKecamatanId = null) {
     const data = selectedKecamatanId
         ? dashboardData.filter((item) => item.id === selectedKecamatanId)
@@ -618,6 +649,7 @@ function renderReligion(selectedKecamatanId = null) {
     });
 }
 
+// Merender marker titik konflik ke peta (semua kecamatan atau satu kecamatan tertentu) lengkap dengan popup status
 function renderKonflik(kecamatanId = null) {
     const data = kecamatanId
         ? dashboardData.filter((item) => item.id === kecamatanId)
@@ -647,6 +679,7 @@ function renderKonflik(kecamatanId = null) {
     });
 }
 
+// Merender daftar (list) seluruh data konflik dari semua kecamatan ke panel [data-list="konflik"]
 function renderKonflikList() {
     const container = document.querySelector('[data-list="konflik"]');
 
@@ -684,6 +717,7 @@ function renderKonflikList() {
     container.innerHTML = `<div class="divide-y divide-white/5">${rows}</div>`;
 }
 
+// Fungsi utama switch layer: membersihkan peta lalu menampilkan data sesuai kategori terpilih (konflik/agama/ormas/partai)
 function activate(category, kecamatanId = null) {
     clearMapLayer();
 
@@ -705,6 +739,7 @@ function activate(category, kecamatanId = null) {
     renderOrganization(category, kecamatanId);
 }
 
+// Mendaftarkan seluruh event listener untuk kontrol UI (toggle layer, toggle boundary, pilih kecamatan, tombol clear)
 function bindControls() {
     document.querySelectorAll("[data-boundary-toggle]").forEach((checkbox) => {
         checkbox.addEventListener("change", (event) => {
@@ -751,6 +786,7 @@ function bindControls() {
     });
 }
 
+// Entry point: mengambil data dashboard dari server lalu menginisialisasi seluruh tampilan (chart, peta, kontrol)
 fetch("/dashboard/data")
     .then((response) => {
         if (!response.ok) {
