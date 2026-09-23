@@ -36,7 +36,10 @@ class DashboardController extends Controller
             'desa.partai',
             'desa.penduduk',
             'desa.sebaranAgama.agama',
-        ])->get()->sortBy(fn(Kecamatan $kecamatan): int => $this->kecamatanSortPosition($kecamatan->nama))->values()->map(function (Kecamatan $kecamatan) use ($totalAgama, $konflikByKecamatan): array {
+        ])->get()->sortBy(fn(Kecamatan $kecamatan): int => $this->kecamatanSortPosition(
+            $kecamatan->nama
+        ))->values()->map(function (Kecamatan $kecamatan)
+        use ($totalAgama, $konflikByKecamatan): array {
             $desa = $kecamatan->desa;
 
             return [
