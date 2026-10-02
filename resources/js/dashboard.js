@@ -2,7 +2,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 const BULELENG_CENTER = [-8.1509, 115.0489];
-const DEFAULT_ZOOM = 9.5;
+const DEFAULT_ZOOM = 10.0;
 let dashboardData = [];
 let kecamatanById = new Map();
 let selectedKecamatanId = null;
