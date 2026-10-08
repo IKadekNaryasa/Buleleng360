@@ -1,6 +1,7 @@
 [
     {
         "nama_partai": "Partai Keadilan Sejahtera",
+        "status": "aktif",
         "nama_desa": "Kelurahan Penarukan",
         "nama_kecamatan": "Buleleng",
         "jumlah_kader": 0,
@@ -13,6 +14,7 @@
     },
     {
         "nama_partai": "PARTAI BURUH",
+        "status": "aktif",
         "nama_desa": "Kelurahan Penarukan",
         "nama_kecamatan": "Buleleng",
         "jumlah_kader": 0,
@@ -25,6 +27,7 @@
     },
     {
         "nama_partai": "Partai Gerakan Rakyat",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kampungbaru",
         "nama_kecamatan": "Buleleng",
         "jumlah_kader": 0,
@@ -37,6 +40,7 @@
     },
     {
         "nama_partai": "PARTAI HATI NURANI RAKYAT",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kampung Anyar",
         "nama_kecamatan": "Buleleng",
         "jumlah_kader": 0,
@@ -49,6 +53,7 @@
     },
     {
         "nama_partai": "DEWAN PIMPINAN CABANG PARTAI DEMOKRASI INDONESIA PERJUANGAN KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Pemaron",
         "nama_kecamatan": "Buleleng",
         "jumlah_kader": 0,
@@ -61,6 +66,7 @@
     },
     {
         "nama_partai": "DEWAN PIMPINAN DAERAH PARTAI NASDEM KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banyuasri",
         "nama_kecamatan": "Buleleng",
         "jumlah_kader": 0,
@@ -73,6 +79,7 @@
     },
     {
         "nama_partai": "DEWAN PIMPINAN CABANG PARTAI GERINDRA KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Liligundi",
         "nama_kecamatan": "Buleleng",
         "jumlah_kader": 0,
@@ -85,6 +92,7 @@
     },
     {
         "nama_partai": "Dewan Pimpinan Daerah Partai Golongan Karya Kabupaten Buleleng",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banjar Jawa",
         "nama_kecamatan": "Buleleng",
         "jumlah_kader": 0,
@@ -97,6 +105,7 @@
     },
     {
         "nama_partai": "Dewan Pimpinan Cabang Demokrat",
+        "status": "aktif",
         "nama_desa": "Baktiseraga",
         "nama_kecamatan": "Buleleng",
         "jumlah_kader": 0,

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
     'lat',
     'long',
     'alamat',
+    'status',
 ])]
 class Ormas extends Model
 {

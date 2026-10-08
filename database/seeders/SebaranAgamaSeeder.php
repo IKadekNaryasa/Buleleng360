@@ -9,6 +9,8 @@ use Illuminate\Database\Seeder;
 
 class SebaranAgamaSeeder extends Seeder
 {
+    private const YEAR = 2025;
+
     public function run(): void
     {
         $agamaMap = Agama::query()->pluck('id', 'agama');
@@ -49,7 +51,7 @@ class SebaranAgamaSeeder extends Seeder
 
             foreach ($agamaNames as $index => $namaAgama) {
                 SebaranAgama::updateOrCreate(
-                    ['desa_id' => $desa->id, 'agama_id' => $agamaMap[$namaAgama]],
+                    ['desa_id' => $desa->id, 'agama_id' => $agamaMap[$namaAgama], 'tahun' => self::YEAR],
                     ['jumlah_pemeluk' => $jumlahAgama[$index]],
                 );
             }

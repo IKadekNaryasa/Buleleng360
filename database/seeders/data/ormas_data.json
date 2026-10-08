@@ -1,6 +1,7 @@
 [
     {
         "nama_ormas": "Persatuan Wartawan Indonesia (PWI) Kabupaten Buleleng",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banjartegal",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -13,6 +14,7 @@
     },
     {
         "nama_ormas": "DEWAN PENGURUS DAERAH WAHDAH ISLAMIYAH KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kampung Kajanan",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -25,6 +27,7 @@
     },
     {
         "nama_ormas": "PERKUMPULAN PEMBERANTASAN TUBERKULOSIS INDONESIA CABANG BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banjartegal",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -37,6 +40,7 @@
     },
     {
         "nama_ormas": "Yayasan Pasraman Pinandita Brahma Vidya Samgraha",
+        "status": "aktif",
         "nama_desa": "Kelurahan Penarukan",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -49,6 +53,7 @@
     },
     {
         "nama_ormas": "DEWAN PENGURUS CABANG LASKAR BALI SHANTI KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kaliuntu",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -61,6 +66,7 @@
     },
     {
         "nama_ormas": "PENGURUS DAERAH IKATAN PERSAUDARAAN HAJI INDONESIA KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kampung Kajanan",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -73,6 +79,7 @@
     },
     {
         "nama_ormas": "YAYASAN INTI ALAM BALI",
+        "status": "aktif",
         "nama_desa": "Dencarik",
         "nama_kecamatan": "Banjar",
         "jumlah_anggota": 0,
@@ -85,6 +92,7 @@
     },
     {
         "nama_ormas": "Yayasan Perisai Masyarakat Nusantara",
+        "status": "aktif",
         "nama_desa": "Sangsit",
         "nama_kecamatan": "Sawan",
         "jumlah_anggota": 0,
@@ -97,6 +105,7 @@
     },
     {
         "nama_ormas": "YAYASAN MUKTI LAWE WAISNAWA",
+        "status": "aktif",
         "nama_desa": "Banyuatis",
         "nama_kecamatan": "Banjar",
         "jumlah_anggota": 0,
@@ -109,6 +118,7 @@
     },
     {
         "nama_ormas": "PERSATUAN PERANGKAT DESA INDONESIA KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Sangsit",
         "nama_kecamatan": "Sawan",
         "jumlah_anggota": 0,
@@ -121,6 +131,7 @@
     },
     {
         "nama_ormas": "GERBANG KARSA INDONESIA",
+        "status": "aktif",
         "nama_desa": "Pohbergong",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -133,6 +144,7 @@
     },
     {
         "nama_ormas": "PINANDITA SANGGRAHA NUSANTARA KOORDINATOR DAERAH KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banjartegal",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -145,6 +157,7 @@
     },
     {
         "nama_ormas": "Smiling Kids Bali",
+        "status": "aktif",
         "nama_desa": "Kalibubuk",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -157,6 +170,7 @@
     },
     {
         "nama_ormas": "Yayasan Mardlatillah Singaraja",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banyuasri",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -169,6 +183,7 @@
     },
     {
         "nama_ormas": "YAYASAN TRI MURTI DEWAN PIMPINAN CABANG KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Tunjung",
         "nama_kecamatan": "Kubutambahan",
         "jumlah_anggota": 0,
@@ -181,6 +196,7 @@
     },
     {
         "nama_ormas": "Yayasan Bahari Prawara Indonesia",
+        "status": "aktif",
         "nama_desa": "Bondalem",
         "nama_kecamatan": "Tejakula",
         "jumlah_anggota": 0,
@@ -193,6 +209,7 @@
     },
     {
         "nama_ormas": "YAYASAN PEDULI KEMANUSIAAN SINGARAJA BALI",
+        "status": "aktif",
         "nama_desa": "Sinabun",
         "nama_kecamatan": "Sawan",
         "jumlah_anggota": 0,
@@ -205,6 +222,7 @@
     },
     {
         "nama_ormas": "Yayasan Maha Agung Dharma Jati Singaraja",
+        "status": "aktif",
         "nama_desa": "Kelurahan Sukasada",
         "nama_kecamatan": "Sukasada",
         "jumlah_anggota": 0,
@@ -217,6 +235,7 @@
     },
     {
         "nama_ormas": "Dewan Pimpinan Cabang Prajaniti Buleleng",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banjartegal",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -229,6 +248,7 @@
     },
     {
         "nama_ormas": "Yayasan Pasraman Giri Lokha Ashram",
+        "status": "aktif",
         "nama_desa": "Panji",
         "nama_kecamatan": "Sukasada",
         "jumlah_anggota": 0,
@@ -241,6 +261,7 @@
     },
     {
         "nama_ormas": "YAYASAN BARISAN RAKYAT MERDEKA",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banyuasri",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -253,6 +274,7 @@
     },
     {
         "nama_ormas": "GERAKAN MAHASISWA KRISTEN INDONESIA CABANG SINGARAJA",
+        "status": "aktif",
         "nama_desa": "Panji",
         "nama_kecamatan": "Sukasada",
         "jumlah_anggota": 0,
@@ -265,6 +287,7 @@
     },
     {
         "nama_ormas": "PIMPINAN CABANG MUSLIMAT NAHDLATUL ULAMA KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kaliuntu",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -277,6 +300,7 @@
     },
     {
         "nama_ormas": "SUKA DUKA BALIAGA BERSATU",
+        "status": "aktif",
         "nama_desa": "Sidetapa",
         "nama_kecamatan": "Banjar",
         "jumlah_anggota": 0,
@@ -289,6 +313,7 @@
     },
     {
         "nama_ormas": "NELAYAN BALIKU MURAH REJEKI",
+        "status": "aktif",
         "nama_desa": "Kayuputih",
         "nama_kecamatan": "Sukasada",
         "jumlah_anggota": 0,
@@ -301,6 +326,7 @@
     },
     {
         "nama_ormas": "Dewan Pengurus Cabang Gerakan Untuk Kesejahteraan Tuna Rungu Indonesia Kabupaten Buleleng",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banyuning",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -313,6 +339,7 @@
     },
     {
         "nama_ormas": "YAYASAN DARUL QURAN WADDAKWAH PENGULON",
+        "status": "aktif",
         "nama_desa": "Pengulon",
         "nama_kecamatan": "Gerokgak",
         "jumlah_anggota": 0,
@@ -325,6 +352,7 @@
     },
     {
         "nama_ormas": "YAYASAN KANKER INDONESIA CABANG BULELENG",
+        "status": "aktif",
         "nama_desa": "Baktiseraga",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -337,6 +365,7 @@
     },
     {
         "nama_ormas": "DEWAN PENGURUS DAERAH GERAKAN INDONESIA ANTI NARKOTIKA KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kampung Anyar",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -349,6 +378,7 @@
     },
     {
         "nama_ormas": "DEWAN PIMPINAN DAERAH PENGAJIAN AL HIDAYAH KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kampungbaru",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -361,6 +391,7 @@
     },
     {
         "nama_ormas": "YAYASAN BALI DRESTA DWIPA JAYA",
+        "status": "aktif",
         "nama_desa": "Pakisan",
         "nama_kecamatan": "Kubutambahan",
         "jumlah_anggota": 0,
@@ -373,6 +404,7 @@
     },
     {
         "nama_ormas": "WANITA HINDU DHARMA INDONESIA KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banjartegal",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -385,6 +417,7 @@
     },
     {
         "nama_ormas": "PRATISENTANA BANDESA MANIK MAS",
+        "status": "aktif",
         "nama_desa": "Baktiseraga",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -397,6 +430,7 @@
     },
     {
         "nama_ormas": "YAYASAN SURYA CHANDRA BALI NUSANTARA",
+        "status": "aktif",
         "nama_desa": "Banjar",
         "nama_kecamatan": "Banjar",
         "jumlah_anggota": 0,
@@ -409,6 +443,7 @@
     },
     {
         "nama_ormas": "YAYASAN CAHYA DHARMA BUDAYA",
+        "status": "aktif",
         "nama_desa": "Kayuputih",
         "nama_kecamatan": "Banjar",
         "jumlah_anggota": 0,
@@ -421,6 +456,7 @@
     },
     {
         "nama_ormas": "PEMUDA PANCA MARGA",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banjar Jawa",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -433,6 +469,7 @@
     },
     {
         "nama_ormas": "BARISAN REPUBLIK",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banjartegal",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -445,6 +482,7 @@
     },
     {
         "nama_ormas": "DEWAN PIMPINAN CABANG GERAKAN MAHASISWA NASIONAL INDONESIA BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kaliuntu",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -457,6 +495,7 @@
     },
     {
         "nama_ormas": "HIMPUNAN MAHASISWA ISLAM CABANG SINGARAJA",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banjartegal",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -469,6 +508,7 @@
     },
     {
         "nama_ormas": "PIMPINAN DAERAH PEMUDA MUHAMMADIYAH BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kaliuntu",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -481,6 +521,7 @@
     },
     {
         "nama_ormas": "RADIO ANTAR PENDUDUK INDONESIA WILAYAH 09 KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banjar Jawa",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -493,6 +534,7 @@
     },
     {
         "nama_ormas": "DEWAN PIMPINAN KABUPATEN PERKUMPULAN GERAKAN PENTAKOSTA INDONESIA PEMBAHARUAN BULELENG BALI",
+        "status": "aktif",
         "nama_desa": "Tukad Mungga",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -505,6 +547,7 @@
     },
     {
         "nama_ormas": "ORGANISASI SHIDDIQIYYAH KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Seririt",
         "nama_kecamatan": "Seririt",
         "jumlah_anggota": 0,
@@ -517,6 +560,7 @@
     },
     {
         "nama_ormas": "YAYASAN BALI MUALLAF DEVELOPMENT",
+        "status": "aktif",
         "nama_desa": "Temukus",
         "nama_kecamatan": "Banjar",
         "jumlah_anggota": 0,
@@ -529,6 +573,7 @@
     },
     {
         "nama_ormas": "PERGERAKAN MAHASISWA ISLAM INDONESIA KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kaliuntu",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -541,6 +586,7 @@
     },
     {
         "nama_ormas": "PERSATUAN PERAWAT NASIONAL INDONESIA KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Bungkulan",
         "nama_kecamatan": "Sawan",
         "jumlah_anggota": 0,
@@ -553,6 +599,7 @@
     },
     {
         "nama_ormas": "Fatayat Nahdlatul Ulama",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kaliuntu",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -565,6 +612,7 @@
     },
     {
         "nama_ormas": "Perkumpulan Keluarga Berencana Indonesia Cabang Buleleng",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kaliuntu",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -577,6 +625,7 @@
     },
     {
         "nama_ormas": "Badan Kontak Majelis Ta'lim",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banyuasri",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -589,6 +638,7 @@
     },
     {
         "nama_ormas": "IKATAN BIDAN INDONESIA KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Baktiseraga",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -601,6 +651,7 @@
     },
     {
         "nama_ormas": "DEWAN PIMPINAN CABANG BARISAN RELAWAN NUSANTARA RAYA KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Banjarasem",
         "nama_kecamatan": "Seririt",
         "jumlah_anggota": 0,
@@ -613,6 +664,7 @@
     },
     {
         "nama_ormas": "PROGRAM PEMENANGAN NASIONAL - RI DEWAN PIMPINAN CABANG KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Tukad Mungga",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -625,6 +677,7 @@
     },
     {
         "nama_ormas": "Yayasan Dompet Berbagi Semesta",
+        "status": "aktif",
         "nama_desa": "Temukus",
         "nama_kecamatan": "Banjar",
         "jumlah_anggota": 0,
@@ -637,6 +690,7 @@
     },
     {
         "nama_ormas": "Pimpinan Cabang Kesatuan Mahasiswa Hindu Dharma Indonesia Buleleng",
+        "status": "aktif",
         "nama_desa": "Kelurahan Banjartegal",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -649,6 +703,7 @@
     },
     {
         "nama_ormas": "PERSATUAN PURNAWIRAWAN TNI ANGKATAN DARAT PIMPINAN CABANG KABUPATEN BULELENG",
+        "status": "aktif",
         "nama_desa": "Kelurahan Astina",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,
@@ -661,6 +716,7 @@
     },
     {
         "nama_ormas": "BULELENG SOCIAL COMMUNITY",
+        "status": "aktif",
         "nama_desa": "Kelurahan Kampung Anyar",
         "nama_kecamatan": "Buleleng",
         "jumlah_anggota": 0,

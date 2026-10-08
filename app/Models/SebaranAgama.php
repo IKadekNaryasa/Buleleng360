@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['desa_id', 'agama_id', 'jumlah_pemeluk'])]
+#[Fillable(['desa_id', 'agama_id', 'jumlah_pemeluk', 'tahun'])]
 class SebaranAgama extends Model
 {
     use HasUuids;

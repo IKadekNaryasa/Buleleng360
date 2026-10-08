@@ -43,6 +43,7 @@ class OrmasSeeder extends Seeder
                     'alamat' => $item['alamat'],
                     'lat' => $item['lat'],
                     'long' => $item['long'],
+                    'status' => $item['status'] ?? 'aktif',
                 ]
             );
         }

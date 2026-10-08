@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agama;
 use App\Models\Kecamatan;
+use App\Models\SebaranAgama;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
@@ -30,16 +31,18 @@ class DashboardController extends Controller
     {
         $totalAgama = Agama::count();
         $konflikByKecamatan = $this->konflikByKecamatan();
+        $tahun = SebaranAgama::query()->value('tahun');
 
         return Kecamatan::with([
-            'desa.ormas',
-            'desa.partai',
-            'desa.penduduk',
+            'desa.ormas' => fn ($query) => $query->where('status', 'aktif'),
+            'desa.partai' => fn ($query) => $query->where('status', 'aktif'),
+            'desa.penduduk' => fn ($query) => $query->where('tahun', $tahun ?? 0),
+            'desa.sebaranAgama' => fn ($query) => $query->where('tahun', $tahun ?? 0),
             'desa.sebaranAgama.agama',
         ])->get()->sortBy(fn(Kecamatan $kecamatan): int => $this->kecamatanSortPosition(
             $kecamatan->nama
         ))->values()->map(function (Kecamatan $kecamatan)
-        use ($totalAgama, $konflikByKecamatan): array {
+        use ($totalAgama, $konflikByKecamatan, $tahun): array {
             $desa = $kecamatan->desa;
 
             return [
@@ -49,12 +52,13 @@ class DashboardController extends Controller
                 'lat' => (float) $kecamatan->lat,
                 'long' => (float) $kecamatan->long,
                 'total_agama' => $totalAgama,
+                'tahun' => $tahun === null ? null : (int) $tahun,
                 'geojson_boundary' => $kecamatan->geojson_boundary,
                 'desa' => $desa->map(fn($desaItem): array => [
                     'nama' => $desaItem->nama,
                     'geojson_boundary' => $desaItem->geojson_boundary,
                 ])->filter(fn(array $desaItem): bool => ! empty($desaItem['geojson_boundary']))->values(),
-                'total_penduduk' => $desa->flatMap->penduduk->where('tahun', 2025)->sum('total_jiwa'),
+                'total_penduduk' => $desa->flatMap->penduduk->sum('total_jiwa'),
                 'ormas' => $desa->flatMap(fn($desaItem) => $desaItem->ormas->map(fn($item): array => [
                     'nama_desa' => $desaItem->nama,
                     'nama' => $item->nama,

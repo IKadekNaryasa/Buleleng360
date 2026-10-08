@@ -30,11 +30,11 @@ class AdminController extends Controller
         'bidang' => ['title' => 'Bidang', 'model' => Bidang::class, 'columns' => ['name'], 'fields' => [['name', 'Nama Bidang', 'text']]],
         'kecamatan' => ['title' => 'Kecamatan', 'model' => Kecamatan::class, 'columns' => ['nama', 'lat', 'long'], 'fields' => [['nama', 'Nama', 'text'], ['lat', 'Latitude', 'number'], ['long', 'Longitude', 'number'], ['geojson_boundary', 'GeoJSON Boundary', 'json']]],
         'desa' => ['title' => 'Desa', 'model' => Desa::class, 'columns' => ['nama', 'kecamatan.nama', 'lat', 'long'], 'fields' => [['kecamatan_id', 'Kecamatan', 'select', 'kecamatans'], ['nama', 'Nama', 'text'], ['lat', 'Latitude', 'number'], ['long', 'Longitude', 'number'], ['geojson_boundary', 'GeoJSON Boundary', 'json']]],
-        'partai' => ['title' => 'Partai', 'model' => Partai::class, 'columns' => ['nama', 'desa.nama', 'jumlah_kader', 'ketua'], 'fields' => [['desa_id', 'Desa', 'select', 'desas'], ['nama', 'Nama Partai', 'text'], ['jumlah_kader', 'Jumlah Kader', 'number'], ['ketua', 'Ketua', 'text'], ['sekretaris', 'Sekretaris', 'text'], ['bendahara', 'Bendahara', 'text'], ['lat', 'Latitude', 'number'], ['long', 'Longitude', 'number'], ['alamat', 'Alamat', 'textarea']]],
-        'ormas' => ['title' => 'Ormas', 'model' => Ormas::class, 'columns' => ['nama', 'desa.nama', 'jumlah_anggota', 'ketua'], 'fields' => [['desa_id', 'Desa', 'select', 'desas'], ['nama', 'Nama Ormas', 'text'], ['jumlah_anggota', 'Jumlah Anggota', 'number'], ['ketua', 'Ketua', 'text'], ['sekretaris', 'Sekretaris', 'text'], ['bendahara', 'Bendahara', 'text'], ['lat', 'Latitude', 'number'], ['long', 'Longitude', 'number'], ['alamat', 'Alamat', 'textarea']]],
+        'partai' => ['title' => 'Partai', 'model' => Partai::class, 'columns' => ['nama', 'desa.nama', 'jumlah_kader', 'ketua', 'status'], 'fields' => [['desa_id', 'Desa', 'select', 'desas'], ['nama', 'Nama Partai', 'text'], ['jumlah_kader', 'Jumlah Kader', 'number'], ['ketua', 'Ketua', 'text'], ['sekretaris', 'Sekretaris', 'text'], ['bendahara', 'Bendahara', 'text'], ['lat', 'Latitude', 'number'], ['long', 'Longitude', 'number'], ['alamat', 'Alamat', 'textarea'], ['status', 'Status', 'select', 'statuses']]],
+        'ormas' => ['title' => 'Ormas', 'model' => Ormas::class, 'columns' => ['nama', 'desa.nama', 'jumlah_anggota', 'ketua', 'status'], 'fields' => [['desa_id', 'Desa', 'select', 'desas'], ['nama', 'Nama Ormas', 'text'], ['jumlah_anggota', 'Jumlah Anggota', 'number'], ['ketua', 'Ketua', 'text'], ['sekretaris', 'Sekretaris', 'text'], ['bendahara', 'Bendahara', 'text'], ['lat', 'Latitude', 'number'], ['long', 'Longitude', 'number'], ['alamat', 'Alamat', 'textarea'], ['status', 'Status', 'select', 'statuses']]],
         'agama' => ['title' => 'Agama', 'model' => Agama::class, 'columns' => ['agama'], 'fields' => [['agama', 'Agama', 'select-agama']]],
         'penduduk' => ['title' => 'Penduduk', 'model' => Penduduk::class, 'columns' => ['desa.nama', 'total_jiwa', 'tahun'], 'fields' => [['desa_id', 'Desa', 'select', 'desas'], ['total_jiwa', 'Total Jiwa', 'number'], ['tahun', 'Tahun', 'number']]],
-        'sebaran-agama' => ['title' => 'Sebaran Agama', 'model' => SebaranAgama::class, 'columns' => ['desa.nama', 'agama.agama', 'jumlah_pemeluk'], 'fields' => [['desa_id', 'Desa', 'select', 'desas'], ['agama_id', 'Agama', 'select', 'agamas'], ['jumlah_pemeluk', 'Jumlah Pemeluk', 'number']]],
+        'sebaran-agama' => ['title' => 'Sebaran Agama', 'model' => SebaranAgama::class, 'columns' => ['desa.nama', 'agama.agama', 'jumlah_pemeluk', 'tahun'], 'fields' => [['desa_id', 'Desa', 'select', 'desas'], ['agama_id', 'Agama', 'select', 'agamas'], ['jumlah_pemeluk', 'Jumlah Pemeluk', 'number'], ['tahun', 'Tahun', 'number']]],
     ];
 
     public function dashboard(): View
@@ -53,7 +53,13 @@ class AdminController extends Controller
 
         foreach ($resources as $resource) {
             $config = self::RESOURCES[$resource];
-            $counts[$resource] = $config['model']::count();
+            $query = $config['model']::query();
+
+            if (in_array($resource, ['partai', 'ormas'], true)) {
+                $query->where('status', 'aktif');
+            }
+
+            $counts[$resource] = $query->count();
         }
 
         return view('admin.dashboard', ['counts' => $counts, 'resources' => $resources, 'routePrefix' => $this->routePrefix()]);
@@ -138,6 +144,7 @@ class AdminController extends Controller
             'kecamatans' => Kecamatan::orderBy('nama')->pluck('nama', 'id'),
             'desas' => Desa::with('kecamatan')->orderBy('nama')->get()->mapWithKeys(fn (Desa $desa): array => [$desa->id => $desa->nama.' - '.$desa->kecamatan?->nama]),
             'agamas' => Agama::orderBy('agama')->pluck('agama', 'id'),
+            'statuses' => ['aktif' => 'Aktif', 'nonaktif' => 'Nonaktif'],
         ];
     }
 
@@ -152,7 +159,7 @@ class AdminController extends Controller
             'ormas' => $this->organizationRules('ormas'),
             'agama' => ['agama' => ['required', Rule::in(['islam', 'kristen_protestan', 'kristen_katolik', 'hindu', 'buddha', 'khonghucu', 'lainnya'])]],
             'penduduk' => ['desa_id' => ['required', 'exists:desas,id'], 'total_jiwa' => ['required', 'integer', 'min:0'], 'tahun' => ['required', 'integer', 'between:1900,2200', Rule::unique('penduduks')->where(fn ($query) => $query->where('desa_id', $request->input('desa_id')))->ignore($item?->id)]],
-            'sebaran-agama' => ['desa_id' => ['required', 'exists:desas,id'], 'agama_id' => ['required', 'exists:agamas,id'], 'jumlah_pemeluk' => ['required', 'integer', 'min:0']],
+            'sebaran-agama' => ['desa_id' => ['required', 'exists:desas,id'], 'agama_id' => ['required', 'exists:agamas,id'], 'jumlah_pemeluk' => ['required', 'integer', 'min:0'], 'tahun' => ['required', 'integer', 'between:1900,2200']],
         };
 
         $data = Validator::make($request->all(), $rules)->validate();
@@ -214,6 +221,6 @@ class AdminController extends Controller
 
     private function organizationRules(string $resource): array
     {
-        return ['desa_id' => ['required', 'exists:desas,id'], 'nama' => ['required', 'string', 'max:150'], $resource === 'ormas' ? 'jumlah_anggota' : 'jumlah_kader' => ['required', 'integer', 'min:0'], 'ketua' => ['required', 'string', 'max:150'], 'sekretaris' => ['required', 'string', 'max:150'], 'bendahara' => ['required', 'string', 'max:150'], 'lat' => ['required', 'numeric', 'between:-90,90'], 'long' => ['required', 'numeric', 'between:-180,180'], 'alamat' => ['nullable', 'string']];
+        return ['desa_id' => ['required', 'exists:desas,id'], 'nama' => ['required', 'string', 'max:150'], $resource === 'ormas' ? 'jumlah_anggota' : 'jumlah_kader' => ['required', 'integer', 'min:0'], 'ketua' => ['required', 'string', 'max:150'], 'sekretaris' => ['required', 'string', 'max:150'], 'bendahara' => ['required', 'string', 'max:150'], 'lat' => ['required', 'numeric', 'between:-90,90'], 'long' => ['required', 'numeric', 'between:-180,180'], 'alamat' => ['nullable', 'string'], 'status' => ['required', Rule::in(['aktif', 'nonaktif'])]];
     }
 }

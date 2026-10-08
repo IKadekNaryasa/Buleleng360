@@ -639,7 +639,7 @@ function renderReligion(selectedKecamatanId = null) {
                 `
                 <div class="min-w-[210px] text-slate-900">
                     <strong class="text-base">${escapeHtml(kecamatan.nama)}</strong>
-                    <div class="mt-2 border-b border-slate-200 pb-2 text-sm">Penduduk 2025: <b>${formatNumber(kecamatan.total_penduduk)}</b></div>
+                    <div class="mt-2 border-b border-slate-200 pb-2 text-sm">Penduduk ${kecamatan.tahun ?? "-"}: <b>${formatNumber(kecamatan.total_penduduk)}</b></div>
                     <div class="mt-2 space-y-1 text-sm">${agamaRows || "Belum ada data agama."}</div>
                 </div>
             `,
